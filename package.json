@@ -1,16 +1,20 @@
 {
-  "name": "ecomarketcap",
+  "name": "protocap",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@mantine/core": "^6.0.8",
-    "@mantine/hooks": "^6.0.0-alpha.8",
-    "@mantine/styles": "^6.0.0-alpha.8",
+    "@mantine/ds": "^6.0.0",
+    "@mantine/hooks": "^6.0.0",
+    "@mantine/spotlight": "^6.0.0",
+    "@mantine/styles": "^6.0.0",
+    "@tabler/icons-react": "^2.1.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "babel-eslint": "^10.1.0",
     "bootstrap": "^4.5.0",
     "bootswatch": "^4.5.0",
     "cryptocurrency-icons": "^0.16.1",
@@ -18,7 +22,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^4.0.0",
     "react-tradingview-widget": "^1.3.2",
     "styled-components": "^5.1.1"
   },
@@ -53,6 +57,6 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.15",
     "gh-pages": "^3.1.0",
-    "typescript": "^4.6.2"
+    "typescript": "^4.9.5"
   }
 }

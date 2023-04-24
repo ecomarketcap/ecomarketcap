@@ -8,6 +8,7 @@ import CanvasJSReact from '../../modules/canvasjs.react';
 import { Maths, Format } from '../../modules/Utilities';
 import CoinsPage from '../../pages/mainpages/CoinsPage';
 import { useMantineTheme } from '@mantine/styles';
+import icons from './iconLoader';
 
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -221,18 +222,25 @@ const CoinRow = (props) => {
     },
   };
 
-  function getAvailableIcon() {
-    try {
-      const filename = require(`../../assets/coloredsvg/${props.svg}`);
-      return filename;
-    } catch (error) {
-      if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') {
-        return require('../../assets/coloredsvg/generic.svg');
-      } else {
-        throw error;
-      }
-    }
-  }
+  // function getAvailableIcon() {
+  //   try {
+  //     const filename = `../../assets/coloredsvg/${props.svg}`;
+  //     return filename;
+  //   } catch (error) {
+  //     if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') {
+  //       return '../../assets/coloredsvg/generic.svg';
+  //     } else {
+  //       throw error;
+  //     }
+  //   }
+  // }
+  const getAvailableIcon = () => {
+    const icon = icons[props.svg.replace('.svg', '')];
+    console.log('props.svg', props.svg);
+    console.log('icon', icon);
+    return icon ? icon : icons.generic;
+  };
+
   const icon = getAvailableIcon();
 
   const price = Format.toCurrencyNDigits(props.price, props.devise, 8);
