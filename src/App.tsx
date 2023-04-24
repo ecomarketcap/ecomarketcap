@@ -13,7 +13,8 @@ import '@fortawesome/fontawesome-free/js/all';
 import MainPage from './pages/MainPage';
 import NotFoundPage from './pages/otherpages/NotFoundPage';
 import ComingSoonPage from './pages/otherpages/ComingSoonPage';
-import MainFooter from './components/Footers/MainFooter';
+import MainFooter from './components/footer';
+import { links as footerLinks } from './components/footer/links';
 
 function App() {
   /*
@@ -63,7 +64,7 @@ function App() {
                   <Route path='*' component={NotFoundPage} />
                 </Switch>
 
-                <MainFooter></MainFooter>
+                <MainFooter data={footerLinks?.data}></MainFooter>
               </div>
             </BrowserRouter>
           </DataContext.Provider>
