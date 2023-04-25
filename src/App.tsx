@@ -20,10 +20,10 @@ import ComingSoon from './pages/ComingSoon';
 import MainFooter from './components/footer';
 import { links as footerLinks } from './components/footer/links';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
-import MainPageHeader from './components/Headers/MainPageHeader';
 import MainNavbar from './components/navbar/MainNavbar';
-import HorzPubBanner from './components/Banners/HorizontalPubBanner';
 import { mainNavbarLinks } from './components/navbar';
+import InfoBanner from './components/banner/InfoBanner';
+import { MarketHeader } from './components/header';
 
 function App() {
   /*
@@ -37,7 +37,6 @@ function App() {
    * set the user as not login
    */
   const [isAuth, setIsAuth] = useState(false);
-  const [lastUpdateTime, setLastUpdateTime] = useState();
   const [coinsInfos, setCoinsInfos] = useState({
     dictionary: [],
     list: [],
@@ -53,12 +52,6 @@ function App() {
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
-
-  const refreshUpdateTime = (
-    newUpdateTime: React.SetStateAction<undefined>
-  ) => {
-    setLastUpdateTime(newUpdateTime);
-  };
 
   return (
     <>
@@ -76,13 +69,9 @@ function App() {
             <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
               <BrowserRouter>
                 <div className='globalContainer container-fluid'>
-                  <MainPageHeader
-                    lastUpdateTime={lastUpdateTime}
-                    refreshUpdateTime={refreshUpdateTime}
-                  />
+                  <InfoBanner />
+                  <MarketHeader />
                   <MainNavbar links={mainNavbarLinks} />
-
-                  <HorzPubBanner />
                   <Switch>
                     <Route
                       exact

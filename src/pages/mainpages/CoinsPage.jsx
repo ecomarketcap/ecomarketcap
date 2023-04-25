@@ -4,7 +4,7 @@ import { Route, Switch, withRouter, useParams } from 'react-router-dom';
 import { DataProvider } from '../../modules/DataProvider';
 import { DataContext } from '../../components/navbar/DataContext';
 
-import CoinPageHeader from '../../components/Headers/CoinPageHeader';
+import { CoinPageHeader } from '../../components/header';
 import { CoinNavbar } from '../../components/navbar';
 import CoinAbout from '../../components/CoinPageContent/CoinAbout';
 import CoinChart from '../../components/CoinPageContent/CoinChart';
