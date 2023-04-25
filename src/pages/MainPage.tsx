@@ -6,7 +6,7 @@ import { DataProvider } from '../modules/DataProvider';
 import RankingsPage from './mainpages/RankingsPage';
 import CoinsPage from './mainpages/CoinsPage';
 import About from './About';
-import Loader from '../components/Loader/Loader';
+import { Loader } from '@mantine/core';
 
 import { Box } from '@mantine/core';
 

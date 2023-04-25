@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 // import { ThemeContext } from "../ThemeToggler/ThemeContext";
-import { lightTheme, darkTheme } from '../../themes/Theme';
+import { lightTheme, darkTheme } from '../../theme';
 
 import styled from 'styled-components';
 import { Format } from '../../modules/Utilities';

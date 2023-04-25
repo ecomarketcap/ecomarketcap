@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 // import { ThemeContext } from "../ThemeToggler/ThemeContext";
-import { lightTheme, darkTheme } from '../../themes/Theme';
+import { lightTheme, darkTheme } from '../../theme';
 
 import styled from 'styled-components';
 import { useMantineTheme } from '@mantine/styles';
@@ -114,27 +114,8 @@ const CoinRankingNavBar = (props) => {
    */
   const { theme } = useMantineTheme();
 
-  const [isDownCrypto, setIsDownCrypto] = useState(false);
-  const [isDownExchange, setIsDownExchanges] = useState(false);
-  const [isDownWatchlist, setIsDownWatchlist] = useState(false);
   const [isDownDevise, setIsDownDevise] = useState(false);
   const [isDownFilter, setIsDownFilter] = useState(false);
-
-  /**
-   * style of the dropdown filter
-   */
-
-  /**
-   * Style classNames
-   *
-   * @todo BUG button market and watchlist => dropdown not opening
-   */
-  const liDropdown = 'nav-item dropdown';
-  const triggerMenu = 'nav-link dropdown-toggle text-primary';
-  const menuCryptoClass = 'dropdown-menu' + (isDownCrypto ? ' show' : '');
-  const menuExchangeClass = 'dropdown-menu' + (isDownExchange ? ' show' : '');
-  const menuWatchlistClass = 'dropdown-menu' + (isDownWatchlist ? ' show' : '');
-  const menuItemClass = 'nav-link dropdown-item';
 
   const menuDeviseClass = 'dropdown-menu' + (isDownDevise ? ' show' : '');
   const triggerBtnMenu = 'btn btn-sm btn-outline-light dropdown-toggle';
@@ -159,24 +140,7 @@ const CoinRankingNavBar = (props) => {
     theme === 'light'
       ? { backgroundColor: lightTheme.body, borderColor: lightTheme.border }
       : { backgroundColor: darkTheme.body, borderColor: darkTheme.border };
-  const cryptoMenuStyle =
-    theme === 'light'
-      ? { backgroundColor: lightTheme.body, color: lightTheme.text }
-      : { backgroundColor: darkTheme.body, color: darkTheme.text };
-  const cryptoMenuActiveStyle = { backgroundColor: 'dodgerblue' };
 
-  /**
-   * toggle functions
-   */
-  const toggleDropDownCrypto = () => {
-    setIsDownCrypto((oldValue) => !oldValue);
-  };
-  const toggleDropDownExchange = () => {
-    setIsDownExchanges((oldValue) => !oldValue);
-  };
-  const toggleDropDownWatchlist = () => {
-    setIsDownWatchlist((oldValue) => !oldValue);
-  };
   const toggleDropDownDevise = () => {
     setIsDownDevise((oldValue) => !oldValue);
   };
@@ -269,77 +233,6 @@ const CoinRankingNavBar = (props) => {
 
   return (
     <Nav className='d-flex justify-content-between' theme={theme}>
-      <ul className='nav nav-tabs'>
-        <LiCrypto className={liDropdown}>
-          <BtnMenu
-            className={triggerMenu}
-            onClick={toggleDropDownCrypto}
-            data-toggle='dropdown'
-            aria-haspopup='true'
-            aria-expanded='false'
-          >
-            Cryptocurrencies
-          </BtnMenu>
-          <div className={menuCryptoClass}>
-            <NavLink
-              to='/'
-              className={menuItemClass + ' active'}
-              onClick={toggleDropDownCrypto}
-              style={cryptoMenuStyle}
-              activeStyle={cryptoMenuActiveStyle}
-            >
-              Top50
-            </NavLink>
-            <NavLink to='/' className={menuItemClass} style={cryptoMenuStyle}>
-              Deritatives
-            </NavLink>
-            <NavLink to='/' className={menuItemClass} style={cryptoMenuStyle}>
-              Defi
-            </NavLink>
-          </div>
-        </LiCrypto>
-        <LiMarkets className={liDropdown}>
-          <BtnMenu
-            className={triggerMenu}
-            onClick={toggleDropDownExchange}
-            data-toggle='dropdown'
-            href='#'
-            role='button'
-            aria-haspopup='true'
-            aria-expanded='false'
-          >
-            Markets
-          </BtnMenu>
-          <div
-            className={menuExchangeClass}
-            style={cryptoMenuStyle}
-            onClick={toggleDropDownExchange}
-          >
-            coming soon...
-          </div>
-        </LiMarkets>
-        <LiWatchlist className={liDropdown}>
-          <BtnMenu
-            className={triggerMenu}
-            onClick={toggleDropDownWatchlist}
-            data-toggle='dropdown'
-            href='#'
-            role='button'
-            aria-haspopup='true'
-            aria-expanded='false'
-          >
-            Watchlist
-          </BtnMenu>
-          <div
-            className={menuWatchlistClass}
-            style={cryptoMenuStyle}
-            onClick={toggleDropDownWatchlist}
-          >
-            coming soon...
-          </div>
-        </LiWatchlist>
-      </ul>
-
       <div className='d-flex justify-content-end filter' style={pageStyle}>
         <div className='dropdown filter'>
           <BtnFilter

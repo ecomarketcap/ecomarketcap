@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, Col, Grid, useMantineColorScheme } from '@mantine/core';
 import { Format } from '../../modules/Utilities';
-import { darkTheme, lightTheme } from '../../themes/Theme';
+import { darkTheme, lightTheme } from '../../theme';
 
 interface CoinInfo {
   image: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, useMantineColorScheme } from '@mantine/core';
 
-import { lightTheme, darkTheme } from '../../themes/Theme';
+import { lightTheme, darkTheme } from '../../theme';
 import { Time, Format } from '../../modules/Utilities';
 import { DataProvider } from '../../modules/DataProvider';
 

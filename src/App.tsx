@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { LoginContext } from './components/AuthRoute/LoginContext';
 import { DataContext } from './components/navbar/DataContext';
 
 // import { ThemeProvider } from 'styled-components';
@@ -55,7 +54,6 @@ function App() {
 
   return (
     <>
-      {/* <ThemeContext.Provider value={{ theme, toggleTheme }}> */}
       <ColorSchemeProvider
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
@@ -65,37 +63,34 @@ function App() {
           withGlobalStyles
           withNormalizeCSS
         >
-          <LoginContext.Provider value={{ isAuth, setIsAuth }}>
-            <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
-              <BrowserRouter>
-                <div className='globalContainer container-fluid'>
-                  <InfoBanner />
-                  <MarketHeader />
-                  <MainNavbar links={mainNavbarLinks} />
-                  <Switch>
-                    <Route
-                      exact
-                      strict
-                      path='(/|/cryptomarketparrot)(/|)'
-                      component={MainPage}
-                    />
-                    <Route exact path='/coin/:id/:type' component={MainPage} />
+          <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
+            <BrowserRouter>
+              <div className='globalContainer container-fluid'>
+                <InfoBanner />
+                <MarketHeader />
+                <MainNavbar links={mainNavbarLinks} />
+                <Switch>
+                  <Route
+                    exact
+                    strict
+                    path='(/|/cryptomarketparrot)(/|)'
+                    component={MainPage}
+                  />
+                  <Route exact path='/coin/:id/:type' component={MainPage} />
 
-                    <Route path='/about' component={MainPage} />
+                  <Route path='/about' component={MainPage} />
 
-                    <Route path='/(exchanges||learn)' component={ComingSoon} />
+                  <Route path='/(exchanges||learn)' component={ComingSoon} />
 
-                    <Route path='*' component={NotFound} />
-                  </Switch>
+                  <Route path='*' component={NotFound} />
+                </Switch>
 
-                  <MainFooter data={footerLinks?.data}></MainFooter>
-                </div>
-              </BrowserRouter>
-            </DataContext.Provider>
-          </LoginContext.Provider>
+                <MainFooter data={footerLinks?.data}></MainFooter>
+              </div>
+            </BrowserRouter>
+          </DataContext.Provider>
         </MantineProvider>
       </ColorSchemeProvider>
-      {/* </ThemeContext.Provider> */}
     </>
   );
 }

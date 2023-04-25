@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
 // import { ThemeContext } from "../ThemeToggler/ThemeContext";
-import { lightTheme, darkTheme } from '../../themes/Theme';
+import { lightTheme, darkTheme } from '../../theme';
 
 import styled from 'styled-components';
 import { useMantineTheme } from '@mantine/styles';

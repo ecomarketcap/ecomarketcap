@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Route, NavLink, withRouter } from 'react-router-dom';
 
 // import { ThemeContext } from "../ThemeToggler/ThemeContext";
-import { lightTheme, darkTheme } from '../../themes/Theme';
+import { lightTheme, darkTheme } from '../../theme';
 import styled, { keyframes } from 'styled-components';
 import CanvasJSReact from '../../modules/canvasjs.react';
 import { Maths, Format } from '../../modules/Utilities';

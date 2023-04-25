@@ -7,8 +7,8 @@ import { DataContext } from '../../components/navbar/DataContext';
 import { CoinPageHeader } from '../../components/header';
 import { CoinNavbar } from '../../components/navbar';
 import CoinAbout from '../../components/CoinPageContent/CoinAbout';
-import CoinChart from '../../components/CoinPageContent/CoinChart';
-import Loader from '../../components/Loader/Loader';
+import CoinDetailsChart from '../../components/chart/CoinDetailsChart';
+import { Loader } from '@mantine/core';
 
 /************************************
  *
@@ -21,7 +21,7 @@ const CoinsPage = () => {
   const [coinInfo, setCoinInfo] = useState([]);
   const [coinTwitter, setCoinTwitter] = useState([]);
   const [coinEvents, setCoinEvents] = useState([]);
-  const [coinMarkets, setCoinMarkets] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const { coinsInfos } = useContext(DataContext);
 
@@ -40,18 +40,13 @@ const CoinsPage = () => {
     const testData = coinInfo !== undefined ? [] : coinInfo;
     if (testData.length === 0) {
       let respInfos = DataProvider.getCoinInfoGecko(id_gecko);
-      let respTwitter = DataProvider.getCoinTwitterPaprika(id_paprika);
       let respEvents = DataProvider.getCoinEventsPaprika(id_paprika);
-      let respMarkets = DataProvider.getCoinMarketsPaprika(id_paprika);
 
-      Promise.all([respInfos, respTwitter, respEvents, respMarkets]).then(
-        (responses) => {
-          setCoinInfo(responses[0].data);
-          setCoinTwitter(responses[1].data);
-          setCoinEvents(responses[2].data);
-          setCoinMarkets(responses[3].data);
-        }
-      );
+      Promise.all([respInfos, respEvents]).then((responses) => {
+        setCoinInfo(responses[0].data);
+
+        setCoinEvents(responses[1].data);
+      });
       setLoading(false);
     }
   }
@@ -80,7 +75,7 @@ const CoinsPage = () => {
               />
             </Route>
             <Route exact path={`/coin/${id}/chart`}>
-              <CoinChart coin={id_tview} />
+              <CoinDetailsChart coin={id_tview} />
             </Route>
           </Switch>
         </div>
