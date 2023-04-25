@@ -1,16 +1,12 @@
 import React from 'react';
-import ComingSoon from "./ComingSoonPage";
-
+import ComingSoon from '../ComingSoon';
 
 /************************************
- * 
+ *
  * SignUpPage
- * 
+ *
  * ******************************** */
 
 export default function SignUpPage(props) {
-    return (
-        <ComingSoon name="Sign Up Page"/>
-    );
-
+  return <ComingSoon name='Sign Up Page' />;
 }

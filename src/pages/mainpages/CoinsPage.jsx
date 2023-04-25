@@ -2,14 +2,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Route, Switch, withRouter, useParams } from 'react-router-dom';
 
 import { DataProvider } from '../../modules/DataProvider';
-import { DataContext } from '../../components/NavBars/DataContext';
+import { DataContext } from '../../components/navbar/DataContext';
 
 import CoinPageHeader from '../../components/Headers/CoinPageHeader';
-import CoinPageNavBar from '../../components/NavBars/CoinPageNavBar';
+import { CoinNavbar } from '../../components/navbar';
 import CoinAbout from '../../components/CoinPageContent/CoinAbout';
 import CoinChart from '../../components/CoinPageContent/CoinChart';
-import CoinMarkets from '../../components/CoinPageContent/CoinMarkets';
-import CoinMedias from '../../components/CoinPageContent/CoinMedias';
 import Loader from '../../components/Loader/Loader';
 
 /************************************
@@ -71,7 +69,7 @@ const CoinsPage = () => {
       ) : (
         <div className='container'>
           <CoinPageHeader coinInfo={coinInfo} coin={coinsInfos.list.get(id)} />
-          <CoinPageNavBar coin={id} />
+          <CoinNavbar coin={id} />
 
           <Switch>
             <Route exact path={`/coin/${id}/about`}>
@@ -83,16 +81,6 @@ const CoinsPage = () => {
             </Route>
             <Route exact path={`/coin/${id}/chart`}>
               <CoinChart coin={id_tview} />
-            </Route>
-            <Route exact path={`/coin/${id}/medias`}>
-              <CoinMedias
-                coinTwitter={coinTwitter}
-                coinsInfos={coinsInfos}
-                coin={id}
-              />
-            </Route>
-            <Route exact path={`(/coin/${id})(/markets)`}>
-              <CoinMarkets coinMarkets={coinMarkets} />
             </Route>
           </Switch>
         </div>

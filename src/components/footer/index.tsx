@@ -136,6 +136,7 @@ function MainFooter({ data }: FooterLinksProps) {
         sx={(theme) => ({
           display: 'flex',
           justifyContent: 'space-between',
+          maxWidth: '80rem',
 
           [theme.fn.smallerThan('sm')]: {
             flexDirection: 'column',

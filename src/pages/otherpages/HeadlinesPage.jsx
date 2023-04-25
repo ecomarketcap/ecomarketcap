@@ -1,17 +1,12 @@
 import React from 'react';
-import ComingSoon from "./ComingSoonPage";
-
+import ComingSoon from '../ComingSoon';
 
 /************************************
- * 
+ *
  * HeadlinesPage
- * 
+ *
  * ******************************** */
 
-
 export default function HeadlinesPage(props) {
-    return (
-        <ComingSoon name="Headlines Page"/>
-    );
-
+  return <ComingSoon name='Headlines Page' />;
 }

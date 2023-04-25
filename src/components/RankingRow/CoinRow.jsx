@@ -236,8 +236,7 @@ const CoinRow = (props) => {
   // }
   const getAvailableIcon = () => {
     const icon = icons[props.svg.replace('.svg', '')];
-    console.log('props.svg', props.svg);
-    console.log('icon', icon);
+
     return icon ? icon : icons.generic;
   };
 
