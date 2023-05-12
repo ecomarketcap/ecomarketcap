@@ -43,19 +43,10 @@ const MainPage: React.FC = (props) => {
   };
 
   const fetchCoinsList = async () => {
-    const dictionary: string[] = [];
-
-    await DataProvider.getCoinList().then((datas) => {
-      for (const val of datas.values()) {
-        dictionary.push(
-          val.name.toLowerCase() + ' ' + val.symbol.toLowerCase()
-        );
-      }
-
+    await DataProvider.getCoinList().then((coins) => {
       setCoinsInfos(() => {
         const infos = {
-          dictionary: dictionary,
-          list: datas,
+          list: coins,
         };
         return infos;
       });

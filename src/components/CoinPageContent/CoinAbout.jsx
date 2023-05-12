@@ -64,18 +64,6 @@ export default function CoinAbout(props) {
           style={colorStyle}
         >
           <div className='col-6'>
-            <ul>
-              <SpanTitle>Next events :</SpanTitle>
-              {props.coinEvents.map((res) => {
-                return (
-                  <Li key={res.id}>
-                    <span>Date : {' ' + res.date}</span>
-                    <a to={res.link}> {res.name}</a>
-                    <article>{res.description}</article>
-                  </Li>
-                );
-              })}
-            </ul>
             <article>
               <SpanTitle>Links :</SpanTitle>
               <ul>

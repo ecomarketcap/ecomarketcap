@@ -91,7 +91,7 @@ const RankingCoins: React.FC<RankingCoinsProps> = ({
               symbol={symbol}
               svg={
                 coinsInfos.list.get(symbol.toLowerCase())
-                  ? coinsInfos.list.get(symbol.toLowerCase()).svg
+                  ? coinsInfos?.list?.get(symbol.toLowerCase())?.svg
                   : 'generic.svg'
               }
               name={name}

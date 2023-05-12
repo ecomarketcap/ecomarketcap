@@ -37,7 +37,6 @@ function App() {
    */
   const [isAuth, setIsAuth] = useState(false);
   const [coinsInfos, setCoinsInfos] = useState({
-    dictionary: [],
     list: [],
   });
 

@@ -19,15 +19,12 @@ import { Loader } from '@mantine/core';
 const CoinsPage = () => {
   const { id } = useParams();
   const [coinInfo, setCoinInfo] = useState([]);
-  const [coinTwitter, setCoinTwitter] = useState([]);
-  const [coinEvents, setCoinEvents] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const { coinsInfos } = useContext(DataContext);
 
   const id_tview = id.toUpperCase() + 'USD';
 
-  const id_paprika = coinsInfos.list.get(id).paprika_id;
   const id_gecko = coinsInfos.list.get(id).gecko_id;
 
   useEffect(() => {
@@ -40,12 +37,9 @@ const CoinsPage = () => {
     const testData = coinInfo !== undefined ? [] : coinInfo;
     if (testData.length === 0) {
       let respInfos = DataProvider.getCoinInfoGecko(id_gecko);
-      let respEvents = DataProvider.getCoinEventsPaprika(id_paprika);
 
-      Promise.all([respInfos, respEvents]).then((responses) => {
+      Promise.all([respInfos]).then((responses) => {
         setCoinInfo(responses[0].data);
-
-        setCoinEvents(responses[1].data);
       });
       setLoading(false);
     }
@@ -68,11 +62,7 @@ const CoinsPage = () => {
 
           <Switch>
             <Route exact path={`/coin/${id}/about`}>
-              <CoinAbout
-                coinInfo={coinInfo}
-                coinEvents={coinEvents}
-                ident={coinsInfos.list.get(id)}
-              />
+              <CoinAbout coinInfo={coinInfo} ident={coinsInfos.list.get(id)} />
             </Route>
             <Route exact path={`/coin/${id}/chart`}>
               <CoinDetailsChart coin={id_tview} />
