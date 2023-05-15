@@ -8,23 +8,23 @@ import { CoinPageHeader } from '../../components/header';
 import { CoinNavbar } from '../../components/navbar';
 import CoinAbout from '../../components/CoinPageContent/CoinAbout';
 import CoinDetailsChart from '../../components/chart/CoinDetailsChart';
-import { Loader } from '@mantine/core';
+import { Box, Loader } from '@mantine/core';
+import { CoinDetailsData } from '../../types';
 
-/************************************
- *
- * CoinsPage
- *
- * ******************************** */
+type RouteParams = {
+  id: string;
+};
 
 const CoinsPage = () => {
-  const { id } = useParams();
-  const [coinInfo, setCoinInfo] = useState([]);
+  const { id } = useParams<RouteParams>();
 
+  const [coinDetailsData, setCoinDetailsData] = useState<CoinDetailsData>(
+    {} as CoinDetailsData
+  );
   const [loading, setLoading] = useState(true);
   const { coinsInfos } = useContext(DataContext);
 
   const id_tview = id.toUpperCase() + 'USD';
-
   const id_gecko = coinsInfos.list.get(id).gecko_id;
 
   useEffect(() => {
@@ -33,42 +33,59 @@ const CoinsPage = () => {
     }
   });
 
-  function fetchCoinData() {
-    const testData = coinInfo !== undefined ? [] : coinInfo;
-    if (testData.length === 0) {
+  const fetchCoinData = () => {
+    const data = coinDetailsData ? { ...coinDetailsData } : {};
+    if (Object?.keys(data)?.length === 0) {
       let respInfos = DataProvider.getCoinInfoGecko(id_gecko);
 
       Promise.all([respInfos]).then((responses) => {
-        setCoinInfo(responses[0].data);
+        setCoinDetailsData(responses[0].data);
       });
       setLoading(false);
     }
-  }
+  };
 
   return (
     <>
-      {coinInfo === undefined ? (
-        <div className='container'>
+      {coinDetailsData === undefined ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
           <Loader />
-        </div>
-      ) : coinInfo.length === 0 ? (
-        <div className='container'>
+        </Box>
+      ) : Object.keys(coinDetailsData).length === 0 ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
           <Loader />
-        </div>
+        </Box>
       ) : (
-        <div className='container'>
-          <CoinPageHeader coinInfo={coinInfo} coin={coinsInfos.list.get(id)} />
+        <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: '2em' }}>
+          <CoinPageHeader coinDetailsData={coinDetailsData} />
           <CoinNavbar coin={id} />
 
           <Switch>
             <Route exact path={`/coin/${id}/about`}>
-              <CoinAbout coinInfo={coinInfo} ident={coinsInfos.list.get(id)} />
+              <CoinAbout
+                coinDetailsData={coinDetailsData}
+                ident={coinsInfos.list.get(id)}
+              />
             </Route>
             <Route exact path={`/coin/${id}/chart`}>
               <CoinDetailsChart coin={id_tview} />
             </Route>
           </Switch>
-        </div>
+        </Box>
       )}
     </>
   );

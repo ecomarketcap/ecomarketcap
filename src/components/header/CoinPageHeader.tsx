@@ -2,43 +2,13 @@ import React from 'react';
 import { Box, Text, Col, Grid, useMantineColorScheme } from '@mantine/core';
 import { Format } from '../../modules/Utilities';
 import { darkTheme, lightTheme } from '../../theme';
+import { CoinDetailsData } from '../../types';
 
-interface CoinInfo {
-  image: {
-    small: string;
-  };
-  market_data: {
-    market_cap_rank: number;
-    price_change_percentage_24h: number;
-    total_volume: {
-      usd: number;
-    };
-    high_24h: {
-      usd: number;
-    };
-    low_24h: {
-      usd: number;
-    };
-    current_price: {
-      usd: number;
-      btc: number;
-      eth: number;
-    };
-    total_supply: number;
-    circulating_supply: number;
-  };
-  block_time_in_minutes: number;
-  hashing_algorithm: string;
-  categories: string[];
-  name: string;
-  symbol: string;
-}
+type CoinPageHeaderProps = {
+  coinDetailsData: CoinDetailsData;
+};
 
-interface CoinPageHeaderProps {
-  coinInfo: CoinInfo;
-}
-
-const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
+const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinDetailsData }) => {
   const { colorScheme: theme } = useMantineColorScheme();
   const headerStyle =
     theme === 'light'
@@ -55,15 +25,15 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
       <Grid gutter='md' justify='center' sx={headerStyle}>
         <Col span={3}>
           <Box sx={{ textAlign: 'center' }}>
-            <img src={coinInfo.image.small} alt='' />
+            <img src={coinDetailsData?.image?.small} alt='' />
           </Box>
           <Text size='xs' weight='bold'>
-            Market cap rank: {coinInfo.market_data.market_cap_rank}
+            Market cap rank: {coinDetailsData?.market_data?.market_cap_rank}
           </Text>
           <Text size='xs' weight='bold'>
             Change % (24h):{' '}
             {Format.toCurrencyNDigits(
-              coinInfo.market_data.price_change_percentage_24h,
+              coinDetailsData?.market_data?.price_change_percentage_24h,
               'USD',
               5
             )}
@@ -71,7 +41,7 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
           <Text size='xs' weight='bold'>
             Total volume:{' '}
             {Format.toCurrencyNDigits(
-              coinInfo.market_data.total_volume.usd,
+              coinDetailsData?.market_data?.total_volume.usd,
               'USD',
               0
             )}
@@ -82,17 +52,17 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
             <Col span={6}>
               <Box sx={{ textAlign: 'center' }}>
                 <Text size='xl' weight='bold'>
-                  {coinInfo.name}
+                  {coinDetailsData?.name}
                 </Text>
                 <Text size='lg' weight='bold'>
-                  {coinInfo.symbol}
+                  {coinDetailsData?.symbol}
                 </Text>
               </Box>
               <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
                 <Text size='xs' weight='bold'>
                   High (24h):{' '}
                   {Format.toCurrencyNDigits(
-                    coinInfo.market_data.high_24h.usd,
+                    coinDetailsData?.market_data?.high_24h.usd,
                     'USD',
                     2
                   )}
@@ -100,7 +70,7 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
                 <Text size='xs' weight='bold'>
                   Low (24h):{' '}
                   {Format.toCurrencyNDigits(
-                    coinInfo.market_data.low_24h.usd,
+                    coinDetailsData?.market_data?.low_24h.usd,
                     'USD',
                     2
                   )}
@@ -108,13 +78,16 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
               </Box>
               <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
                 <Text size='xs' weight='bold'>
-                  Price (usd): {coinInfo.market_data.current_price.usd}
+                  Price (usd):{' '}
+                  {coinDetailsData?.market_data?.current_price?.usd}
                 </Text>
                 <Text size='xs' weight='bold'>
-                  Price (btc): {coinInfo.market_data.current_price.btc}
+                  Price (btc):{' '}
+                  {coinDetailsData?.market_data?.current_price?.btc}
                 </Text>
                 <Text size='xs' weight='bold'>
-                  Price (eth): {coinInfo.market_data.current_price.eth}
+                  Price (eth):{' '}
+                  {coinDetailsData?.market_data?.current_price?.eth}
                 </Text>
               </Box>
             </Col>
@@ -128,11 +101,13 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
               >
                 <Text size='xs' weight='bold'>
                   Total supply:{' '}
-                  {Format.toLocale(coinInfo.market_data.total_supply)}
+                  {Format.toLocale(coinDetailsData?.market_data?.total_supply)}
                 </Text>
                 <Text size='xs' weight='bold'>
                   Circulating supply:{' '}
-                  {Format.toLocale(coinInfo.market_data.circulating_supply)}
+                  {Format.toLocale(
+                    coinDetailsData?.market_data?.circulating_supply
+                  )}
                 </Text>
               </Box>
               <Box
@@ -143,10 +118,10 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
                 }}
               >
                 <Text size='xs' weight='bold'>
-                  Block time(min): {coinInfo.block_time_in_minutes}
+                  Block time(min): {coinDetailsData?.block_time_in_minutes}
                 </Text>
                 <Text size='xs' weight='bold'>
-                  Hash Algorithm: {coinInfo.hashing_algorithm}
+                  Hash Algorithm: {coinDetailsData?.hashing_algorithm}
                 </Text>
               </Box>
 
@@ -160,7 +135,7 @@ const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinInfo }) => {
                 <Text size='xs' weight='bold'>
                   Category:
                 </Text>
-                {coinInfo.categories.map((cat, index) => (
+                {coinDetailsData?.categories.map((cat, index) => (
                   <Text key={index} size='xs'>
                     {index > 0 && cat !== '' ? ', ' + cat : cat}
                   </Text>
