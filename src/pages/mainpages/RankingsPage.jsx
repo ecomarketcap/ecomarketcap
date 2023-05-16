@@ -364,7 +364,7 @@ export default function RankingsPage(props) {
    * @param {number} minPrice
    * @param {number} maxPrice
    */
-  const changeFilter = async (
+  const changeFilter = async ({
     minCap,
     maxCap,
     minSup,
@@ -374,8 +374,8 @@ export default function RankingsPage(props) {
     minVarAth,
     maxVarAth,
     minPrice,
-    maxPrice
-  ) => {
+    maxPrice,
+  }) => {
     /*update the filter settings*/
     setFilter((oldFilter) => {
       const newFilter = {
