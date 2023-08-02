@@ -63,6 +63,7 @@ import {
   IconBrandInstagram,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
+import { Link } from 'react-router-dom';
 
 type FooterLinksProps = {
   data: {
@@ -74,27 +75,15 @@ type FooterLinksProps = {
 function MainFooter({ data }: FooterLinksProps) {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <Text<'a'>
+      <Link
         key={index}
-        component='a'
-        href={link.link}
-        onClick={(event) => event.preventDefault()}
-        sx={(theme) => ({
-          display: 'block',
-          fontSize: theme.fontSizes.sm,
-          color:
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[1]
-              : theme.colors.gray[6],
-          paddingTop: rem(3),
-          paddingBottom: rem(3),
-          '&:hover': {
-            textDecoration: 'underline',
-          },
-        })}
+        to={link.link}
       >
         {link.label}
-      </Text>
+      </Link >
+
+
+
     ));
 
     return (
