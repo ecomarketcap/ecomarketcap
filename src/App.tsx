@@ -23,6 +23,8 @@ import MainNavbar from './components/navbar/MainNavbar';
 import { mainNavbarLinks } from './components/navbar';
 import InfoBanner from './components/banner/InfoBanner';
 import { MarketHeader } from './components/header';
+import About from './pages/About';
+import FeaturesCards from './components/about';
 
 function App() {
   /*
@@ -35,7 +37,7 @@ function App() {
   /*
    * set the user as not login
    */
-  const [isAuth, setIsAuth] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
   const [coinsInfos, setCoinsInfos] = useState({
     list: [],
   });
@@ -45,6 +47,8 @@ function App() {
     defaultValue: 'dark',
     getInitialValueInEffect: true,
   });
+
+
 
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
@@ -75,14 +79,28 @@ function App() {
                     path='(/|/cryptomarketparrot)(/|)'
                     component={MainPage}
                   />
+                  <Route path='/about'>
+                    <Switch>
+                      <Route exact path='/about' component={About} />
+                      <Route path='/about/company' component={FeaturesCards} />
+                    </Switch>
+                  </Route>
+
                   <Route exact path='/coin/:id/:type' component={MainPage} />
 
-                  <Route path='/about' component={MainPage} />
+                  {/* <Route path='/about' component={MainPage} /> */}
 
                   <Route path='/(exchanges||learn)' component={ComingSoon} />
 
                   <Route path='*' component={NotFound} />
+
+                  {/* <Route path='/about/company' component={FeaturesCards} /> */}
                 </Switch>
+
+
+
+
+
 
                 <MainFooter data={footerLinks?.data}></MainFooter>
               </div>

@@ -64,7 +64,7 @@ import {
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantine/ds';
 
-interface FooterLinksProps {
+type FooterLinksProps = {
   data: {
     title: string;
     links: { label: string; link: string }[];
@@ -121,11 +121,10 @@ function MainFooter({ data }: FooterLinksProps) {
         marginTop: rem(120),
         paddingTop: `calc(${theme.spacing.xl} * 2)`,
         paddingBottom: `calc(${theme.spacing.xl} * 2)`,
-        borderTop: `1px solid ${
-          theme.colorScheme === 'dark'
-            ? theme.colors.dark[5]
-            : theme.colors.gray[2]
-        }`,
+        borderTop: `1px solid ${theme.colorScheme === 'dark'
+          ? theme.colors.dark[5]
+          : theme.colors.gray[2]
+          }`,
         backgroundColor:
           theme.colorScheme === 'dark'
             ? theme.colors.dark[6]
@@ -191,11 +190,10 @@ function MainFooter({ data }: FooterLinksProps) {
           marginTop: theme.spacing.xl,
           paddingTop: theme.spacing.xl,
           paddingBottom: theme.spacing.xl,
-          borderTop: `1px solid ${
-            theme.colorScheme === 'dark'
-              ? theme.colors.dark[4]
-              : theme.colors.gray[2]
-          }`,
+          borderTop: `1px solid ${theme.colorScheme === 'dark'
+            ? theme.colors.dark[4]
+            : theme.colors.gray[2]
+            }`,
           [theme.fn.smallerThan('sm')]: {
             flexDirection: 'column',
           },

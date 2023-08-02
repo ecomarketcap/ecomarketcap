@@ -4,8 +4,8 @@ export const links = {
       title: 'About',
       links: [
         {
-          label: 'Features',
-          link: '#',
+          label: 'Company',
+          link: '/about/company',
         },
         {
           label: 'Pricing',
