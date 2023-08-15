@@ -3,6 +3,7 @@ import { DataContext } from '../../components/navbar/DataContext';
 import styled from 'styled-components';
 
 import RankingCoins from './../../components/RankingList/RankingCoins';
+import { Pagination } from '../../components/navbar';
 import { CoinRankNavbar } from '../../components/navbar';
 
 import { Compare, Filter, Copy, Time } from '../../modules/Utilities';
@@ -469,6 +470,13 @@ export default function RankingsPage(props) {
         snapshotChange={DataSet.snapshotChange}
         handleClickSort={handleClickSort}
         pubIsOpen={props.pubIsOpen}
+      />
+      <Pagination
+        toggleDevise={toggleDevise}
+        changeFilter={changeFilter}
+        handleClickPage={handleClickPage}
+        devise={filter.devise}
+        page={page}
       />
     </div>
   );

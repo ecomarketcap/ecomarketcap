@@ -30,11 +30,14 @@ export const Filters = ({
               max={inputData.max}
               name={inputData.id}
               ref={inputData.ref}
+              mr='xs'
             />
           </div>
         ))}
       </Grid>
-      <Button onClick={changeFilterHandler}>Apply Filter</Button>
+      <Button onClick={changeFilterHandler} mr='xs'>
+        Apply Filter
+      </Button>
       <Button onClick={resetFilterHandler}>Reset Filter</Button>
     </Box>
   );

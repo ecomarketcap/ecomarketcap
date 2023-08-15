@@ -1,62 +1,12 @@
-// import React from 'react';
-// import { Container, Grid, Text, Paper } from '@mantine/core';
-
-// import reactLogo from '../../assets/logos/logo192.png';
-// import geckoLogo from '../../assets/logos/coingecko.svg';
-
-// /************************************
-//  *
-//  * Footer / logos
-//  *
-//  * ******************************** */
-// export default function CoinChart() {
-//   return (
-//     <Paper p='md' shadow='xs'>
-//       <Container>
-//         <Grid justify='between'>
-//           <Grid.Col span={6}>
-//             <Grid>
-//               <Grid.Col span={4} content='around'>
-//                 <Text style={{ fontStyle: 'italic' }}>build with</Text>
-//               </Grid.Col>
-//               <Grid.Col span={8}>
-//                 <img
-//                   style={{ marginBottom: '1rem' }}
-//                   src={reactLogo}
-//                   alt='react logo'
-//                   height='30px'
-//                 />
-//               </Grid.Col>
-//             </Grid>
-//           </Grid.Col>
-
-//           <Grid.Col span={6}>
-//             <Grid>
-//               <Grid.Col span={4} content='around'>
-//                 <Text style={{ fontStyle: 'italic' }}>powered by</Text>
-//               </Grid.Col>
-//               <Grid.Col span={8}>
-//                 <Text style={{ fontStyle: 'italic', padding: '0 1rem' }}>
-//                   &
-//                 </Text>
-//                 <Text component='a' href='https://www.coingecko.com'>
-//                   <img
-//                     style={{ marginBottom: '1rem' }}
-//                     src={geckoLogo}
-//                     alt='coingecko.com'
-//                     height='30px'
-//                   />
-//                 </Text>
-//               </Grid.Col>
-//             </Grid>
-//           </Grid.Col>
-//         </Grid>
-//       </Container>
-//     </Paper>
-//   );
-// }
-
-import { Text, Container, ActionIcon, Group, Box, rem } from '@mantine/core';
+import {
+  Text,
+  Container,
+  ActionIcon,
+  Group,
+  Box,
+  rem,
+  NavLink,
+} from '@mantine/core';
 import {
   IconBrandTwitter,
   IconBrandYoutube,
@@ -70,20 +20,31 @@ type FooterLinksProps = {
     title: string;
     links: { label: string; link: string }[];
   }[];
-}
+};
 
 function MainFooter({ data }: FooterLinksProps) {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <Link
+      <NavLink
+        component='a'
         key={index}
-        to={link.link}
-      >
-        {link.label}
-      </Link >
-
-
-
+        label={link.label}
+        href={link.link}
+        sx={(theme) => ({
+          display: 'block',
+          fontSize: theme.fontSizes.sm,
+          color:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[1]
+              : theme.colors.gray[6],
+          paddingTop: rem(3),
+          paddingBottom: rem(3),
+          paddingLeft: 0,
+          '&:hover': {
+            textDecoration: 'underline',
+          },
+        })}
+      />
     ));
 
     return (
@@ -110,10 +71,11 @@ function MainFooter({ data }: FooterLinksProps) {
         marginTop: rem(120),
         paddingTop: `calc(${theme.spacing.xl} * 2)`,
         paddingBottom: `calc(${theme.spacing.xl} * 2)`,
-        borderTop: `1px solid ${theme.colorScheme === 'dark'
-          ? theme.colors.dark[5]
-          : theme.colors.gray[2]
-          }`,
+        borderTop: `1px solid ${
+          theme.colorScheme === 'dark'
+            ? theme.colors.dark[5]
+            : theme.colors.gray[2]
+        }`,
         backgroundColor:
           theme.colorScheme === 'dark'
             ? theme.colors.dark[6]
@@ -179,10 +141,11 @@ function MainFooter({ data }: FooterLinksProps) {
           marginTop: theme.spacing.xl,
           paddingTop: theme.spacing.xl,
           paddingBottom: theme.spacing.xl,
-          borderTop: `1px solid ${theme.colorScheme === 'dark'
-            ? theme.colors.dark[4]
-            : theme.colors.gray[2]
-            }`,
+          borderTop: `1px solid ${
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[4]
+              : theme.colors.gray[2]
+          }`,
           [theme.fn.smallerThan('sm')]: {
             flexDirection: 'column',
           },
