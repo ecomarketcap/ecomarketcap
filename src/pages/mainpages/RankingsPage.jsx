@@ -346,25 +346,6 @@ export default function RankingsPage(props) {
     });
   };
 
-  /**
-   * Manage new filter settings from user
-   *
-   * -set changes in the filter
-   * -set the page count to 0 to get a new snapshot to display
-   * -search for prices change in the snapshot
-   * -update data states
-   *
-   * @param {number} minCap
-   * @param {number} maxCap
-   * @param {number} minSup
-   * @param {number} maxSup
-   * @param {number} minVarD
-   * @param {number} maxVarD
-   * @param {number} minVarAth
-   * @param {number} maxVarAth
-   * @param {number} minPrice
-   * @param {number} maxPrice
-   */
   const changeFilter = async ({
     minCap,
     maxCap,
@@ -462,7 +443,7 @@ export default function RankingsPage(props) {
         page={page}
       />
 
-      <RankingCoins
+      {/* <RankingCoins
         coinsData={DataSet.snapshot}
         coinsList={coinsInfos.list}
         priceSetData={DataSet.priceSetData}
@@ -470,7 +451,7 @@ export default function RankingsPage(props) {
         snapshotChange={DataSet.snapshotChange}
         handleClickSort={handleClickSort}
         pubIsOpen={props.pubIsOpen}
-      />
+      /> */}
       <Pagination
         toggleDevise={toggleDevise}
         changeFilter={changeFilter}

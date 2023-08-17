@@ -1,7 +1,10 @@
-import { TextInput, Grid, Box, Button } from '@mantine/core';
+import { TextInput, Grid, Box, Button, Collapse } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks'; // This hook will be used to toggle the collapse effect
 import { useFilters } from './hooks';
 import { FilterInputs as FilterInputsType } from './types';
 import { getFilterInputData } from './data';
+
+// ...
 
 export const Filters = ({
   changeFilter,
@@ -14,6 +17,7 @@ export const Filters = ({
     changeFilter,
     resetFilter,
   });
+
   const filterInputData = getFilterInputData({ inputRefs });
 
   return (
@@ -31,14 +35,23 @@ export const Filters = ({
               name={inputData.id}
               ref={inputData.ref}
               mr='xs'
+              size='xs'
             />
           </div>
         ))}
       </Grid>
-      <Button onClick={changeFilterHandler} mr='xs'>
+      <Button
+        size='xs'
+        radius='md'
+        color='gray'
+        onClick={changeFilterHandler}
+        mr='xs'
+      >
         Apply Filter
       </Button>
-      <Button onClick={resetFilterHandler}>Reset Filter</Button>
+      <Button size='xs' radius='md' color='gray' onClick={resetFilterHandler}>
+        Reset Filter
+      </Button>
     </Box>
   );
 };

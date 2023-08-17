@@ -43,7 +43,6 @@ const Pagination = ({
       p='sm'
       mt='xl'
       sx={{
-        backgroundColor: theme === 'dark' ? darkTheme?.body : lightTheme?.body,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
