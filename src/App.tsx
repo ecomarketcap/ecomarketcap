@@ -48,8 +48,6 @@ function App() {
     getInitialValueInEffect: true,
   });
 
-
-
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
 
@@ -68,42 +66,37 @@ function App() {
         >
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
-              <div className='globalContainer container-fluid'>
-                <InfoBanner />
-                <MarketHeader />
-                <MainNavbar links={mainNavbarLinks} />
-                <Switch>
-                  <Route
-                    exact
-                    strict
-                    path='(/|/cryptomarketparrot)(/|)'
-                    component={MainPage}
-                  />
-                  <Route path='/about'>
-                    <Switch>
-                      <Route exact path='/about' component={About} />
-                      <Route path='/about/company' component={FeaturesCards} />
-                    </Switch>
-                  </Route>
+              {/* <div className='globalContainer container-fluid'> */}
+              <InfoBanner />
+              <MarketHeader />
+              <MainNavbar links={mainNavbarLinks} />
+              <Switch>
+                <Route
+                  exact
+                  strict
+                  path='(/|/cryptomarketparrot)(/|)'
+                  component={MainPage}
+                />
+                <Route path='/about'>
+                  <Switch>
+                    <Route exact path='/about' component={About} />
+                    <Route path='/about/company' component={FeaturesCards} />
+                  </Switch>
+                </Route>
 
-                  <Route exact path='/coin/:id/:type' component={MainPage} />
+                <Route exact path='/coin/:id/:type' component={MainPage} />
 
-                  {/* <Route path='/about' component={MainPage} /> */}
+                {/* <Route path='/about' component={MainPage} /> */}
 
-                  <Route path='/(exchanges||learn)' component={ComingSoon} />
+                <Route path='/(exchanges||learn)' component={ComingSoon} />
 
-                  <Route path='*' component={NotFound} />
+                <Route path='*' component={NotFound} />
 
-                  {/* <Route path='/about/company' component={FeaturesCards} /> */}
-                </Switch>
+                {/* <Route path='/about/company' component={FeaturesCards} /> */}
+              </Switch>
 
-
-
-
-
-
-                <MainFooter data={footerLinks?.data}></MainFooter>
-              </div>
+              <MainFooter data={footerLinks?.data}></MainFooter>
+              {/* </div> */}
             </BrowserRouter>
           </DataContext.Provider>
         </MantineProvider>

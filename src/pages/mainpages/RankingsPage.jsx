@@ -443,7 +443,7 @@ export default function RankingsPage(props) {
         page={page}
       />
 
-      {/* <RankingCoins
+      <RankingCoins
         coinsData={DataSet.snapshot}
         coinsList={coinsInfos.list}
         priceSetData={DataSet.priceSetData}
@@ -451,7 +451,7 @@ export default function RankingsPage(props) {
         snapshotChange={DataSet.snapshotChange}
         handleClickSort={handleClickSort}
         pubIsOpen={props.pubIsOpen}
-      /> */}
+      />
       <Pagination
         toggleDevise={toggleDevise}
         changeFilter={changeFilter}

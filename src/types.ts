@@ -28,3 +28,7 @@ export type CoinDetailsData = {
   name: string;
   symbol: string;
 };
+
+export type RouteParams = {
+  tabValue?: string;
+};
