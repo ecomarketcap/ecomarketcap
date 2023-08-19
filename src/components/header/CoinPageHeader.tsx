@@ -1,191 +1,199 @@
 import React from 'react';
-import { Box, Text, Col, Grid, useMantineColorScheme } from '@mantine/core';
+import {
+  Box,
+  Text,
+  Group,
+  SimpleGrid,
+  Image,
+  Divider,
+  useMantineTheme,
+  Badge,
+  Button,
+  Grid,
+  rem,
+} from '@mantine/core';
+import { IconArrowDownRight, IconArrowUpRight } from '@tabler/icons-react';
 import { Format } from '../../modules/Utilities';
-import { darkTheme, lightTheme } from '../../theme';
-import { CoinDetailsData } from '../../types';
+import { CoinDetailsDataType } from '../../types';
 
-type CoinPageHeaderProps = {
-  coinDetailsData: CoinDetailsData;
-};
+const CoinPageHeader: React.FC<{ coinDetailsData: CoinDetailsDataType }> = ({
+  coinDetailsData,
+}) => {
+  const theme = useMantineTheme();
+  const priceChangeColor =
+    coinDetailsData?.market_data?.price_change_percentage_24h >= 0
+      ? theme.colors.green[6]
+      : theme.colors.red[6];
 
-const CoinPageHeader: React.FC<CoinPageHeaderProps> = ({ coinDetailsData }) => {
-  const { colorScheme: theme } = useMantineColorScheme();
-  const headerStyle =
-    theme === 'light'
-      ? {
-          backgroundImage: 'linear-gradient(127deg, #093637, #093b58)',
-          color: '#ffffff',
-          padding: '20px',
-        }
-      : {
-          backgroundImage: 'linear-gradient(127deg, #1a1a1b, #2b2b2b)',
-          color: '#ffffff',
-          padding: '20px',
-        };
+  const IconComponent =
+    coinDetailsData?.market_data?.price_change_percentage_24h > 0
+      ? IconArrowUpRight
+      : IconArrowDownRight;
 
   return (
-    <header>
-      <Grid gutter='md' justify='center' sx={headerStyle}>
-        <Col span={3}>
-          <Box sx={{ textAlign: 'center', marginBottom: '20px' }}>
-            <img
-              src={coinDetailsData?.image?.small}
-              alt=''
-              style={{ borderRadius: '50%', border: '2px solid #fff' }}
-            />
-          </Box>
-          <Box sx={{ marginBottom: '10px' }}>
-            <Text size='sm' weight='bold'>
-              Market cap rank: {coinDetailsData?.market_data?.market_cap_rank}
-            </Text>
+    <Box pb='md'>
+      <SimpleGrid spacing='sm' cols={1} mb='xl'>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'left',
+          }}
+        >
+          <Button
+            color='gray'
+            variant='filled'
+            compact
+            sx={{
+              textAlign: 'center',
+              pointerEvents: 'none',
+            }}
+            radius='md'
+            size='xs'
+          >
+            Rank #{coinDetailsData?.market_data?.market_cap_rank}
+          </Button>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Image
+            src={coinDetailsData?.image?.small}
+            alt={coinDetailsData?.name}
+            width={30}
+          />
+          <Text size='xl' weight={700}>
+            {coinDetailsData?.name}
+          </Text>
+          <Text size='lg' color='gray'>
+            {coinDetailsData?.symbol.toUpperCase()}
+          </Text>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Text size='xl' weight={700}>
+            {Format.toCurrencyNDigits(
+              coinDetailsData?.market_data?.current_price?.usd,
+              'USD',
+              2
+            )}
+          </Text>
+          <Group align='flex-end' spacing={0}>
             <Text
-              size='sm'
-              weight='bold'
-              color={
-                coinDetailsData?.market_data?.price_change_percentage_24h >= 0
-                  ? 'green'
-                  : 'red'
-              }
+              fw={700}
+              sx={{
+                color: priceChangeColor,
+              }}
             >
-              Change % (24h):{' '}
-              {Format.toCurrencyNDigits(
-                coinDetailsData?.market_data?.price_change_percentage_24h,
-                'USD',
-                5
+              {coinDetailsData?.market_data?.price_change_percentage_24h.toFixed(
+                2
               )}
+              %
             </Text>
-            <Text size='sm' weight='bold'>
-              Total volume:{' '}
+            <IconComponent
+              size='1rem'
+              style={{
+                marginBottom: theme.spacing.xs,
+                color: priceChangeColor,
+              }}
+              stroke={1.5}
+            />
+          </Group>
+        </Box>
+      </SimpleGrid>
+      <SimpleGrid spacing={20} cols={2}>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              Market Cap
+            </Text>
+            <Text size='xs' fw={700}>
               {Format.toCurrencyNDigits(
-                coinDetailsData?.market_data?.total_volume.usd,
+                coinDetailsData?.market_data?.market_cap?.usd,
                 'USD',
-                0
+                2
               )}
             </Text>
           </Box>
-        </Col>
-        <Col span={9}>
-          <Grid gutter='md'>
-            <Col span={6}>
-              <Box sx={{ textAlign: 'center', marginBottom: '20px' }}>
-                <Text size='xxl' weight='bold' sx={{ marginBottom: '10px' }}>
-                  {coinDetailsData?.name}
-                </Text>
-                <Text size='lg' color='gray'>
-                  {coinDetailsData?.symbol.toUpperCase()}
-                </Text>
-              </Box>
-              <Box
-                sx={{
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  marginBottom: '10px',
-                }}
-              >
-                <Text size='sm' weight='bold'>
-                  High (24h):{' '}
-                  {Format.toCurrencyNDigits(
-                    coinDetailsData?.market_data?.high_24h.usd,
-                    'USD',
-                    2
-                  )}
-                </Text>
-                <Text size='sm' weight='bold'>
-                  Low (24h):{' '}
-                  {Format.toCurrencyNDigits(
-                    coinDetailsData?.market_data?.low_24h.usd,
-                    'USD',
-                    2
-                  )}
-                </Text>
-              </Box>
-              <Box
-                sx={{
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  marginBottom: '10px',
-                }}
-              >
-                <Text size='sm' weight='bold'>
-                  Price (usd):{' '}
-                  {Format.toCurrencyNDigits(
-                    coinDetailsData?.market_data?.current_price?.usd,
-                    'USD',
-                    2
-                  )}
-                </Text>
-                <Text size='sm' weight='bold'>
-                  Price (btc):{' '}
-                  {Format.toCurrencyNDigits(
-                    coinDetailsData?.market_data?.current_price?.btc,
-                    'BTC',
-                    8
-                  )}
-                </Text>
-                <Text size='sm' weight='bold'>
-                  Price (eth):{' '}
-                  {Format.toCurrencyNDigits(
-                    coinDetailsData?.market_data?.current_price?.eth,
-                    'ETH',
-                    5
-                  )}
-                </Text>
-              </Box>
-            </Col>
-            <Col span={5}>
-              <Box
-                sx={{
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  marginBottom: '10px',
-                }}
-              >
-                <Text size='sm' weight='bold'>
-                  Total supply:{' '}
-                  {Format.toLocale(coinDetailsData?.market_data?.total_supply)}
-                </Text>
-                <Text size='sm' weight='bold'>
-                  Circulating supply:{' '}
-                  {Format.toLocale(
-                    coinDetailsData?.market_data?.circulating_supply
-                  )}
-                </Text>
-              </Box>
-              <Box
-                sx={{
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  marginBottom: '10px',
-                }}
-              >
-                <Text size='sm' weight='bold'>
-                  Block time (min): {coinDetailsData?.block_time_in_minutes}
-                </Text>
-                <Text size='sm' weight='bold'>
-                  Hash Algorithm: {coinDetailsData?.hashing_algorithm}
-                </Text>
-              </Box>
-              <Box
-                sx={{
-                  justifyContent: 'space-between',
-                  display: 'flex',
-                  marginBottom: '10px',
-                }}
-              >
-                <Text size='sm' weight='bold'>
-                  Category:
-                </Text>
-                {coinDetailsData?.categories.map((cat, index) => (
-                  <Text key={index} size='sm'>
-                    {index > 0 && cat !== '' ? ', ' + cat : cat}
-                  </Text>
-                ))}
-              </Box>
-            </Col>
-          </Grid>
-        </Col>
-      </Grid>
-    </header>
+          <Divider />
+        </Box>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              Total Volume
+            </Text>
+            <Text size='xs' fw={700}>
+              {Format.toCurrencyNDigits(
+                coinDetailsData?.market_data?.total_volume?.usd,
+                'USD',
+                2
+              )}
+            </Text>
+          </Box>
+          <Divider />
+        </Box>
+      </SimpleGrid>
+      <SimpleGrid spacing={20} cols={2}>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              High (24h)
+            </Text>
+            <Text size='xs' fw={700}>
+              {Format.toCurrencyNDigits(
+                coinDetailsData?.market_data?.high_24h?.usd,
+                'USD',
+                2
+              )}
+            </Text>
+          </Box>
+          <Divider />
+        </Box>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              Low (24h)
+            </Text>
+            <Text size='xs' fw={700}>
+              {Format.toCurrencyNDigits(
+                coinDetailsData?.market_data?.low_24h?.usd,
+                'USD',
+                2
+              )}
+            </Text>
+          </Box>
+          <Divider />
+        </Box>
+      </SimpleGrid>
+      <SimpleGrid spacing={20} cols={2}>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              All Time High
+            </Text>
+            <Text size='xs' fw={700}>
+              {Format.toCurrencyNDigits(
+                coinDetailsData?.market_data?.ath?.usd,
+                'USD',
+                2
+              )}
+            </Text>
+          </Box>
+          <Divider />
+        </Box>
+        <Box>
+          <Box mb='sm' mt='sm'>
+            <Text size='xs' tt='uppercase' fz='xs' c='dimmed' fw={700}>
+              All Time Low
+            </Text>
+            <Text size='xs' fw={700}>
+              {Format.toCurrencyNDigits(
+                coinDetailsData?.market_data?.atl?.usd,
+                'USD',
+                2
+              )}
+            </Text>
+          </Box>
+          <Divider />
+        </Box>
+      </SimpleGrid>
+    </Box>
   );
 };
 

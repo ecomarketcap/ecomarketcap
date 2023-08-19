@@ -9,7 +9,7 @@ import { CoinNavbar } from '../../components/navbar';
 import CoinAbout from '../../components/CoinPageContent/CoinAbout';
 import CoinDetailsChart from '../../components/chart/CoinDetailsChart';
 import { Box, Loader } from '@mantine/core';
-import { CoinDetailsData } from '../../types';
+import { CoinDetailsDataType } from '../../types';
 
 type RouteParams = {
   id: string;
@@ -18,8 +18,8 @@ type RouteParams = {
 const CoinsPage = () => {
   const { id } = useParams<RouteParams>();
 
-  const [coinDetailsData, setCoinDetailsData] = useState<CoinDetailsData>(
-    {} as CoinDetailsData
+  const [coinDetailsData, setCoinDetailsData] = useState<CoinDetailsDataType>(
+    {} as CoinDetailsDataType
   );
   const [loading, setLoading] = useState(true);
   const { coinsInfos } = useContext(DataContext);
