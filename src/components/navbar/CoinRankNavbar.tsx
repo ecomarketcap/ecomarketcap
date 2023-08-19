@@ -1,17 +1,4 @@
-import React, { useState } from 'react';
-import {
-  Col,
-  Grid,
-  Paper,
-  Text,
-  Button,
-  useMantineColorScheme,
-  Divider,
-  Box,
-  Collapse,
-  Transition,
-} from '@mantine/core';
-
+import { Button, useMantineColorScheme, Box, Divider } from '@mantine/core';
 import { FilterInputs } from '../filter/CoinsRanking/types';
 import { CoinsRankingFilters } from '../filter';
 import { useDisclosure } from '@mantine/hooks';
@@ -24,8 +11,6 @@ const CoinRankingNavBar = ({
   changeFilter,
   resetFilter,
 }: {
-  history: any;
-  location: any;
   devise: string;
   setDevise: (devise: string) => void;
   page: { current: number; last: number };
@@ -34,58 +19,54 @@ const CoinRankingNavBar = ({
   resetFilter: () => void;
 }) => {
   const [opened, { toggle }] = useDisclosure(false);
-
   const { colorScheme: theme } = useMantineColorScheme();
 
   return (
-    <>
-      <Box pt='md' pb='md'>
-        <Grid gutter='md'>
-          <Col
-            span={12}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end',
+      }}
+    >
+      <Button
+        onClick={() => toggle()}
+        mb='xs'
+        size='xs'
+        radius='md'
+        color='gray'
+      >
+        Filters {opened ? '▴' : '▾'}
+      </Button>
+
+      <Divider
+        size='xs'
+        mb='xs'
+        sx={{
+          backgroundColor: 'gray',
+          height: '0.1px',
+          width: '100%',
+        }}
+      />
+
+      {opened && (
+        <>
+          <CoinsRankingFilters
+            changeFilter={changeFilter}
+            resetFilter={resetFilter}
+          />
+          <Divider
+            size='xs'
+            mb='xs'
+            sx={{
+              backgroundColor: 'gray',
+              height: '0.1px',
+              width: '100%',
             }}
-          >
-            <Button
-              onClick={() => toggle()}
-              style={{ marginRight: 20 }}
-              size='xs'
-              radius='md'
-              color='gray'
-            >
-              Filters {opened ? '▴' : '▾'}
-            </Button>
-            <Transition
-              mounted={opened}
-              transition='slide-down'
-              duration={200}
-              timingFunction='ease'
-            >
-              {(styles) => (
-                <Box
-                  style={{ ...styles }}
-                  sx={{
-                    position: 'relative',
-                    top: '0px',
-                  }}
-                >
-                  <Grid gutter='md'>
-                    <CoinsRankingFilters
-                      changeFilter={changeFilter}
-                      resetFilter={resetFilter}
-                    />
-                  </Grid>
-                </Box>
-              )}
-            </Transition>
-          </Col>
-        </Grid>
-      </Box>
-      <Divider size='xs' />
-    </>
+          />
+        </>
+      )}
+    </Box>
   );
 };
 
