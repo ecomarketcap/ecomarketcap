@@ -9,7 +9,6 @@ import { CoinRankNavbar } from '../../components/navbar';
 import { Compare, Filter, Copy, Time } from '../../modules/Utilities';
 import { DataProvider } from '../../modules/DataProvider';
 
-/*fix the number of coins per page : 50 due to api request limit*/
 const COIN_COUNT = 50; //100;
 
 const Title = styled.h1`
@@ -23,15 +22,6 @@ const Title = styled.h1`
   }
 `;
 
-/************************************
- *
- * RankingCoinsPage
- *
- * main api calls here
- *
- * @todo manage last page for button Next
- *
- * ******************************** */
 export default function RankingsPage(props) {
   const { coinsInfos } = useContext(DataContext);
 
@@ -72,60 +62,41 @@ export default function RankingsPage(props) {
     filterDidChanged: false,
   });
 
-  //asynchrone
   useEffect(function () {
     if (DataSet.coinsData.length === 0) {
-      // component did mount
       fetchAllData();
     } else {
-      //component did update
     }
-    /*Timer to update prices each 35 sec (2*50req/minute max => give time if 429 before)*/
+
     let interval = null;
     interval = setInterval(() => {
       fetchAllData();
     }, 35000);
 
-    //component will unmount // dependencies array empty => effect call only once when did mount
-    //react warning with ...}, []) => })
     return () => clearInterval(interval);
   });
 
-  /**
-   * PERSO MEMO :
-   * useEffect : setState => render => state updated useEffect play
-   * useLayoutEffect: play BEFORE render with the next value of state
-   */
-
-  //synchrone (changes must be rendered!)
   useLayoutEffect(() => {
     if (needRefresh.needed) {
       refreshData(needRefresh.filterDidChanged);
     }
   });
 
-  /**
-   * Fetch all data (intialize the data)
-   */
   const fetchAllData = async () => {
-    /*Fetch prices and data of all coins*/
     const response = await DataProvider.getCoinsDataAllCur();
-    /*Sort the result by rank*/
+
     const sortedResponse = sortDataSet(
       response.data,
       sorting.key,
       sorting.order
-    ); // response.data.sort(Compare.byKey(sorting.key, sorting.order));
-    /*Filter the result following user settings*/
+    );
     const dataFiltered = Filter.byRange(sortedResponse, filter);
-    /*Get the snapshot to display*/
+
     const newCoinsData = dataFiltered.slice(
       page.current * COIN_COUNT,
       page.current * COIN_COUNT + COIN_COUNT
     );
-    /*Get 7days series of price for the snapshot*/
-    const newPriceSet = await fetchPriceSet(newCoinsData);
-    /*Check changes in price since last snapshot*/
+
     const snapChange = getChangeInSnapshot(newCoinsData);
 
     setDataSet({
@@ -133,89 +104,11 @@ export default function RankingsPage(props) {
       coinsFiltered: Copy.nested(dataFiltered),
       snapshot: Copy.nested(newCoinsData),
       snapshotChange: Copy.deep(snapChange),
-      priceSetData: newPriceSet, //Copy.nested(newPriceSet)
     });
 
     props.refreshUpdateTime(Time.fromTimestamp(Date.now() / 1000));
   };
 
-  /**
-   * Fetch prices series for 7 days to draw mini charts
-   *
-   * -get the snapshot to display and pass in to ident the coins data to fetch
-   * -if gecko and parpika have this coin data then
-   * -check if a set already exist for the coin
-   * -if not then fetch the price serie and add it to the data stored
-   *
-   * using gecko api because of the request limit/min
-   * gecko : 100/min
-   * paprika : 600/min but 10/sec
-   *
-   * @todo set a timer to update price after more than 1 hour (actual update for current hour)
-   *
-   * @param {Object} newCoinsData
-   */
-  const fetchPriceSet = async (newCoinsData) => {
-    const priceSetCopy = Copy.nested(DataSet.priceSetData);
-
-    /*pass in the snapshot to ident the coins to fetch and create a promise array*/
-    const priceSetPromise = newCoinsData.map(async (coin) => {
-      const symbol = coin.symbol.toLowerCase();
-      const coinResponse = {
-        symb: 'symbol',
-        set: [[0, 0]],
-      };
-      const geckoId = coinsInfos.list.get(symbol).gecko_id;
-      /*the desired coin data exist by gecko and paprika so continue*/
-      if (geckoId !== undefined) {
-        if (priceSetCopy[symbol] === undefined) {
-          priceSetCopy[symbol] = {};
-        }
-
-        /*there's no record yet in priceSetData so fetch*/
-        if (priceSetCopy[symbol][filter.devise] === undefined) {
-          const coinResponse = await DataProvider.getCoinsPriceSetGecko(
-            geckoId,
-            filter.devise
-          );
-          return {
-            symb: symbol,
-            set: coinResponse.prices,
-          };
-        } else {
-          /*update the record with the last price*/
-          const updatedSet = priceSetCopy[symbol][filter.devise];
-          updatedSet[updatedSet.length - 1][1] =
-            coin.quotes[filter.devise].price;
-          return {
-            symb: symbol,
-            set: updatedSet,
-          };
-        }
-      }
-      return coinResponse;
-    });
-
-    const priceSetResponse = await Promise.all(priceSetPromise);
-    /*transform the result to get a mapping object of coin => price set (update or create field)*/
-    priceSetResponse.map((coinSet) => {
-      return (priceSetCopy[coinSet.symb][filter.devise] = coinSet.set);
-    });
-
-    return priceSetCopy;
-  };
-
-  /**
-   * Check prices change between old and new snapshot
-   *
-   * -get in param the new snapshot
-   * -pass in the old one to compare the name of coins registered
-   * -check for change
-   *
-   * @todo pas in coinData not in last snapshot to get all change
-   *
-   * @param {Object} newCoinsData
-   */
   const getChangeInSnapshot = (newCoinsData) => {
     const snapChange = [];
     if (DataSet.snapshot.length !== 0) {
@@ -245,11 +138,6 @@ export default function RankingsPage(props) {
     return snapChange;
   };
 
-  /**
-   * Helpers to refresh data after filtering, sorting...
-   * @param {boolean} isFilterChanged
-   * @param {boolean} isSortingChanged
-   */
   const refreshData = async (isFilterChanged) => {
     const dataFiltered = isFilterChanged
       ? Filter.byRange(DataSet.coinsData, filter)
@@ -260,7 +148,6 @@ export default function RankingsPage(props) {
       page.current * COIN_COUNT + COIN_COUNT
     );
     const snapChange = getChangeInSnapshot(newCoinsData);
-    const newPriceSet = await fetchPriceSet(newCoinsData);
 
     /*update data states*/
     setDataSet((oldSet) => {
@@ -269,7 +156,6 @@ export default function RankingsPage(props) {
         coinsFiltered: dataFiltered,
         snapshot: newCoinsData,
         snapshotChange: snapChange,
-        priceSetData: newPriceSet,
       };
       return newSet;
     });
@@ -280,12 +166,6 @@ export default function RankingsPage(props) {
     });
   };
 
-  /**
-   * sorting function
-   * @param {Object} setToSort
-   * @param {string} key
-   * @param {string} order
-   */
   const sortDataSet = (setToSort, key, order) => {
     const newSet = setToSort;
 
@@ -302,23 +182,12 @@ export default function RankingsPage(props) {
     return newSet;
   };
 
-  /**
-   * Manage column sorting
-   *
-   * -sort data by key in the filtered dataset
-   * -reset the page count to 0
-   * -get a new snapshot to display and changes in price
-   * -update data states
-   *
-   * @param {string} key
-   * @param {string} order
-   */
   const handleClickSort = async (key, order) => {
     setSorting({
       key: key,
       order: order,
     });
-    /*reset the page count*/
+
     setPage((oldPage) => {
       const newPage = {
         current: 0,
@@ -331,16 +200,13 @@ export default function RankingsPage(props) {
     /*get the snapshot to display*/
     const newCoinsData = sortedData.slice(0, COIN_COUNT);
     const snapChange = getChangeInSnapshot(newCoinsData);
-    const newPriceSet = await fetchPriceSet(newCoinsData);
 
-    /*update the data states*/
     setDataSet((oldSet) => {
       const newSet = {
         coinsData: oldSet.coinsData,
         coinsFiltered: sortedData,
         snapshot: newCoinsData,
         snapshotChange: snapChange,
-        priceSetData: newPriceSet,
       };
       return newSet;
     });
@@ -358,7 +224,6 @@ export default function RankingsPage(props) {
     minPrice,
     maxPrice,
   }) => {
-    /*update the filter settings*/
     setFilter((oldFilter) => {
       const newFilter = {
         devise: oldFilter.devise,
@@ -379,7 +244,7 @@ export default function RankingsPage(props) {
       };
       return newFilter;
     });
-    /*reset the page count to 0*/
+
     setPage((oldPage) => {
       const newPage = {
         current: 0,
@@ -394,11 +259,6 @@ export default function RankingsPage(props) {
     });
   };
 
-  /**
-   * Manage vs_currency modification
-   *
-   * @param {string} newdevise
-   */
   const toggleDevise = async (newdevise) => {
     setFilter((oldFilter) => {
       const newFilter = Copy.deep(oldFilter);
@@ -409,11 +269,6 @@ export default function RankingsPage(props) {
     refreshData(false);
   };
 
-  /**
-   * Manage page modification
-   *
-   * @param {number} directionNext
-   */
   const handleClickPage = async (directionNext) => {
     setPage((oldPage) => {
       const newCurrent = {
@@ -422,7 +277,7 @@ export default function RankingsPage(props) {
       };
       return newCurrent;
     });
-    // refreshData(false, false);
+
     setNeedRefresh({
       needed: true,
       filterDidChanged: false,

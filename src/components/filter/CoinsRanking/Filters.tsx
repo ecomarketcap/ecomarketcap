@@ -21,31 +21,30 @@ export const Filters = ({
     <>
       <Box sx={{ marginTop: 'xs', maxWidth: '90vw' }}>
         <Grid gutter='md'>
-          {filterInputData.map((inputData, index) => (
+          {filterInputData.map((inputDataGroup, index) => (
             <Grid.Col key={index} span={6}>
-              <Box sx={{ marginBottom: 'xs' }}>
-                <label
-                  htmlFor={inputData.id}
-                  style={{
-                    fontSize: '0.8rem',
+              {inputDataGroup.data.map((inputData, dataIndex) => (
+                <Box
+                  key={dataIndex}
+                  sx={{
                     marginBottom: 'xs',
+                    fontSize: '0.8rem',
                     display: 'block',
                   }}
                 >
-                  {inputData.label}:
-                </label>
-                <TextInput
-                  id={inputData.id}
-                  type='number'
-                  placeholder={inputData.placeholder}
-                  min={inputData.min}
-                  max={inputData.max}
-                  name={inputData.id}
-                  ref={inputData.ref}
-                  size='xs' // This sets the height, so keep it at 'xs' to be small
-                  sx={{ width: '90px' }} // This sets a consistent width for the number inputs.
-                />
-              </Box>
+                  <TextInput
+                    id={inputData.id}
+                    type='number'
+                    placeholder={inputData.placeholder}
+                    min={inputData.min}
+                    max={inputData.max}
+                    name={inputData.id}
+                    ref={inputData.ref}
+                    size='xs'
+                    sx={{ width: '100px' }}
+                  />
+                </Box>
+              ))}
             </Grid.Col>
           ))}
         </Grid>

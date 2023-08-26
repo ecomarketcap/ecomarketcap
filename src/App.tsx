@@ -44,7 +44,7 @@ function App() {
 
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
-    defaultValue: 'dark',
+    defaultValue: 'light',
     getInitialValueInEffect: true,
   });
 
@@ -66,7 +66,6 @@ function App() {
         >
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
-              {/* <div className='globalContainer container-fluid'> */}
               <InfoBanner />
               <MarketHeader />
               <MainNavbar links={mainNavbarLinks} />
@@ -83,20 +82,11 @@ function App() {
                     <Route path='/about/company' component={FeaturesCards} />
                   </Switch>
                 </Route>
-
                 <Route exact path='/coin/:id/:type' component={MainPage} />
-
-                {/* <Route path='/about' component={MainPage} /> */}
-
                 <Route path='/(exchanges||learn)' component={ComingSoon} />
-
                 <Route path='*' component={NotFound} />
-
-                {/* <Route path='/about/company' component={FeaturesCards} /> */}
               </Switch>
-
               <MainFooter data={footerLinks?.data}></MainFooter>
-              {/* </div> */}
             </BrowserRouter>
           </DataContext.Provider>
         </MantineProvider>

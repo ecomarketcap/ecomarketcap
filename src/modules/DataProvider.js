@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getChartSvgIndex } from '../helpers';
 
 const PAPRIKA = {
   BASE_URL: 'https://api.coinpaprika.com/v1',
@@ -10,6 +11,7 @@ const PAPRIKA = {
 const GECKO = {
   BASE_URL: 'https://api.coingecko.com/api/v3',
   COINS: '/coins',
+  COINS_MARKETS: '/coins/markets',
   GLOBAL: '/global',
   LIST: '/list',
   MARKET_CHART: '/market_chart',
@@ -20,36 +22,26 @@ const GECKO = {
 export var DataProvider = {
   getCoinList: async () => {
     let coinList = new Map();
-
-    const responseP = await axios.get(`${PAPRIKA.BASE_URL}${PAPRIKA.COINS}`);
-
-    responseP.data.forEach((coin) => {
-      let key = coin.symbol.toLowerCase();
-      coinList.set(key, {
-        paprika_id: coin.id,
-        gecko_id: '',
-        name: coin.name,
-        symbol: coin.symbol,
-        rank: coin.rank,
-        is_new: coin.is_new,
-        is_active: coin.is_active,
-        type: coin.type,
-        svg: key + '.svg',
-      });
-    });
-
-    const responseC = await axios.get(
-      `${GECKO.BASE_URL}${GECKO.COINS}${GECKO.LIST}`
+    const response = await axios.get(
+      `${GECKO.BASE_URL}${GECKO.COINS_MARKETS}?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
     );
 
-    responseC.data.forEach((coin) => {
-      if (coinList.get(coin.symbol)) {
-        const newset = coinList.get(coin.symbol);
-        newset.gecko_id = coin.id;
-        coinList.set(coin.symbol, newset);
-      }
+    response.data.forEach((coin) => {
+      let key = coin.symbol.toLowerCase();
+      coinList?.set(key, {
+        paprika_id: '',
+        gecko_id: coin?.id,
+        name: coin?.name,
+        symbol: coin?.symbol,
+        rank: coin?.market_cap_rank,
+        is_new: false,
+        is_active: true,
+        svg: coin?.image,
+        chartSvgIndex: getChartSvgIndex({ imageUrl: coin?.image }),
+      });
     });
     console.log('coinList', coinList);
+
     return coinList;
   },
 
@@ -65,22 +57,5 @@ export var DataProvider = {
 
   getCoinInfoGecko: async (id) => {
     return await axios.get(`${GECKO.BASE_URL}${GECKO.COINS}/${id}`);
-  },
-
-  getCoinsPriceSetGecko: async (id, devise) => {
-    const response = await axios
-      .get(
-        `${GECKO.BASE_URL}${GECKO.COINS}/${id}${GECKO.MARKET_CHART}${
-          GECKO.VS_CURRENCY
-        }${devise.toLowerCase()}${GECKO.DAYS}7`
-      )
-      .then((resp) => {
-        return resp.data;
-      })
-      .catch((err) => {
-        console.log('not available', err);
-        return { prices: undefined };
-      });
-    return response;
   },
 };

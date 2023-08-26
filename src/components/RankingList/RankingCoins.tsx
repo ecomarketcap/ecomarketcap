@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useState, useContext } from 'react';
 import { DataContext } from '../navbar/DataContext';
 import CoinRow from '../RankingRow/CoinRow';
 import { Table } from '@mantine/core';
 
-interface CoinsData {
+type CoinsData = {
   rank: number;
   symbol: string;
   name: string;
@@ -21,23 +20,20 @@ interface CoinsData {
       market_cap: number;
     };
   };
-}
+};
 
-interface RankingCoinsProps extends RouteComponentProps {
-  coinsData: CoinsData[];
-  pubIsOpen: boolean;
-  priceSetData: any;
-  snapshotChange: any;
-  devise: string;
-  handleClickSort: (key: string, order: string) => void;
-}
-
-const RankingCoins: React.FC<RankingCoinsProps> = ({
+const RankingCoins = ({
   handleClickSort,
   priceSetData,
   coinsData,
   devise,
   snapshotChange,
+}: {
+  coinsData: CoinsData[];
+  priceSetData: any;
+  snapshotChange: any;
+  devise: string;
+  handleClickSort: (key: string, order: string) => void;
 }) => {
   // const { theme } = useMantineTheme();
 
@@ -67,22 +63,67 @@ const RankingCoins: React.FC<RankingCoinsProps> = ({
         <tr>
           <th onClick={() => sortHeader('rank')}>Rank</th>
           <th onClick={() => sortHeader('name')}>Name</th>
-          <th onClick={() => sortHeader('price')}>Price</th>
-          <th onClick={() => sortHeader('percent_change_1h')}>%(1h)</th>
-          <th onClick={() => sortHeader('percent_change_24h')}>%(24h)</th>
-          <th onClick={() => sortHeader('percent_change_7d')}>%(7d)</th>
-          {!priceSetData ? null : <th>Price (7d)</th>}
-          <th onClick={() => sortHeader('percent_change_30d')}>%(30d)</th>
-          <th onClick={() => sortHeader('percent_from_price_ath')}>%(Ath)</th>
-          <th onClick={() => sortHeader('volume_24h')}>Volume</th>
-          <th onClick={() => sortHeader('market_cap')}>Market Cap</th>
-          <th onClick={() => sortHeader('circulating_supply')}>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('price')}
+          >
+            Price
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('percent_change_1h')}
+          >
+            1h
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('percent_change_24h')}
+          >
+            24h
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('percent_change_7d')}
+          >
+            7d
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('percent_change_30d')}
+          >
+            30d
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('percent_from_price_ath')}
+          >
+            Ath
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('volume_24h')}
+          >
+            Volume 24h
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('market_cap')}
+          >
+            Market Cap
+          </th>
+          <th
+            style={{ textAlign: 'right' }}
+            onClick={() => sortHeader('circulating_supply')}
+          >
             Circulating Supply
           </th>
+          <th style={{ textAlign: 'right' }}>Price (7d)</th>
         </tr>
       </thead>
 
       <tbody>
+        <>{console.log('coinsData', coinsData)}</>
+        <>{console.log('coinsInfos', coinsInfos)}</>
         {coinsData.map(
           ({ rank, symbol, name, circulating_supply, quotes }, index) => (
             <CoinRow
@@ -92,7 +133,7 @@ const RankingCoins: React.FC<RankingCoinsProps> = ({
               svg={
                 coinsInfos.list.get(symbol.toLowerCase())
                   ? coinsInfos?.list?.get(symbol.toLowerCase())?.svg
-                  : 'generic.svg'
+                  : ''
               }
               name={name}
               price={quotes[devise].price}
@@ -104,9 +145,11 @@ const RankingCoins: React.FC<RankingCoinsProps> = ({
               volume_24h={quotes[devise].volume_24h}
               market_cap={quotes[devise].market_cap}
               circulating_supply={circulating_supply}
-              priceSet={priceSetData[symbol.toLowerCase()][devise]}
               snapshotChange={snapshotChange[index]}
               devise={devise}
+              chartSvgIndex={
+                coinsInfos.list.get(symbol.toLowerCase())?.chartSvgIndex || 0
+              }
             />
           )
         )}
@@ -115,4 +158,4 @@ const RankingCoins: React.FC<RankingCoinsProps> = ({
   );
 };
 
-export default withRouter(RankingCoins);
+export default RankingCoins;
