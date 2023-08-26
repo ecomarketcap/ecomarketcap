@@ -7,11 +7,12 @@ export const getFilterInputData = ({
 }) => {
   return [
     {
-      label: 'Capitalization',
+      title: 'Capitalization',
       description: 'Set min and max capitalization',
       data: [
         {
-          label: 'Min Cap',
+          title: 'Min Cap',
+          description: '',
           id: 'minCapInput',
           placeholder: 'min e.g. 0',
           min: 0,
@@ -19,7 +20,8 @@ export const getFilterInputData = ({
           ref: inputRefs.minCap,
         },
         {
-          label: 'Max Cap',
+          title: 'Max Cap',
+          description: '',
           id: 'maxCapInput',
           placeholder: 'max e.g. 999999999999',
           min: 0,
@@ -30,11 +32,12 @@ export const getFilterInputData = ({
     },
 
     {
-      label: 'Supply',
+      title: 'Supply',
       description: 'Set min and max supply',
       data: [
         {
-          label: 'Min Supply',
+          title: 'Min Supply',
+          description: '',
           id: 'min e.g. minSupInput',
           placeholder: 'min e.g. 0',
           min: 0,
@@ -42,7 +45,8 @@ export const getFilterInputData = ({
           ref: inputRefs.minSup,
         },
         {
-          label: 'Max Supply',
+          title: 'Max Supply',
+          description: '',
           id: 'maxSupInput',
           placeholder: 'max e.g. 999999999999',
           min: 0,
@@ -52,11 +56,12 @@ export const getFilterInputData = ({
       ],
     },
     {
-      label: 'Variance 24h',
+      title: 'Variance 24h',
       description: 'Set min and max 24h variance',
       data: [
         {
-          label: 'Min Var(h24)',
+          title: 'Min Var(h24)',
+          description: '',
           id: 'minVarDayInput',
           placeholder: 'min e.g. -100',
           min: -100,
@@ -64,7 +69,8 @@ export const getFilterInputData = ({
           ref: inputRefs.minVarD,
         },
         {
-          label: 'Max Var(h24)',
+          title: 'Max Var(h24)',
+          description: '',
           id: 'maxVarDayInput',
           placeholder: 'max e.g. 10000',
           min: -100,
@@ -74,11 +80,12 @@ export const getFilterInputData = ({
       ],
     },
     {
-      label: 'Variance ATH',
+      title: 'Variance ATH',
       description: 'Set min and max all time high variance',
       data: [
         {
-          label: 'Min Var(ath)',
+          title: 'Min Var(ath)',
+          description: '',
           id: 'minVarAthInput',
           placeholder: 'min e.g. -100',
           min: -100,
@@ -86,7 +93,8 @@ export const getFilterInputData = ({
           ref: inputRefs.minVarAth,
         },
         {
-          label: 'Max Var(ath)',
+          title: 'Max Var(ath)',
+          description: '',
           id: 'maxVarAthInput',
           placeholder: 'max e.g. 10000',
           min: -100,
@@ -96,11 +104,12 @@ export const getFilterInputData = ({
       ],
     },
     {
-      label: 'Price',
+      title: 'Price',
       description: 'Set min and max price',
       data: [
         {
-          label: 'Min Price',
+          title: 'Min Price',
+          description: '',
           id: 'minPriceInput',
           placeholder: 'min e.g. 0',
           min: 0,
@@ -108,7 +117,8 @@ export const getFilterInputData = ({
           ref: inputRefs.minPrice,
         },
         {
-          label: 'Max Price',
+          title: 'Max Price',
+          description: '',
           id: 'maxPriceInput',
           placeholder: 'max e.g. 999999999999',
           min: 0,

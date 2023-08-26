@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, useMantineTheme } from '@mantine/core';
+import { Box, useMantineColorScheme, useMantineTheme } from '@mantine/core';
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 interface CoinDetailsChartProps {
@@ -7,17 +7,18 @@ interface CoinDetailsChartProps {
 }
 
 const CoinDetailsChart = ({ coin }: CoinDetailsChartProps) => {
-  const theme = useMantineTheme();
+  const { colorScheme: theme } = useMantineColorScheme();
+  console.log('theme', theme);
 
-  const colorTheme = theme.colorScheme === 'light' ? null : Themes.DARK;
+  // const colorTheme = theme.colorScheme === 'light' ? null : Themes.DARK;
 
   return (
     <Box sx={{ height: '80vh' }}>
       <TradingViewWidget
         symbol={coin}
         hide_side_toolbar={false}
-        locale='fr'
-        theme={colorTheme}
+        locale='en'
+        theme={theme}
         autosize
       />
     </Box>

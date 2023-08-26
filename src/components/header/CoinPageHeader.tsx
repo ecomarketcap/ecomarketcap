@@ -5,7 +5,6 @@ import {
   Group,
   SimpleGrid,
   Image,
-  Divider,
   useMantineTheme,
   Button,
 } from '@mantine/core';
@@ -55,7 +54,7 @@ const CoinPageHeader: React.FC<{ coinDetailsData: CoinDetailsDataType }> = ({
           <Image
             src={coinDetailsData?.image?.small}
             alt={coinDetailsData?.name}
-            width={30}
+            width={40}
           />
           <Text size='xl' weight={700}>
             {coinDetailsData?.name}

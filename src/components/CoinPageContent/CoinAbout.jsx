@@ -4,7 +4,7 @@ import { lightTheme, darkTheme } from '../../theme';
 
 import styled from 'styled-components';
 import { Format } from '../../modules/Utilities';
-import { useMantineTheme } from '@mantine/styles';
+import { useMantineColorScheme } from '@mantine/styles';
 
 /**
  *
@@ -39,7 +39,7 @@ const Li = styled.li`
  *
  * ******************************** */
 export default function CoinAbout(props) {
-  const { theme } = useMantineTheme();
+  const { colorScheme: theme } = useMantineColorScheme();
 
   const colorStyle =
     theme === 'light'

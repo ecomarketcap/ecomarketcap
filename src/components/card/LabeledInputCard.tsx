@@ -5,18 +5,25 @@ import {
   Text,
   useMantineColorScheme,
 } from '@mantine/core';
+import { ReactNode } from 'react';
 
 export const LabelInputCard = ({
   title,
   description,
   data,
+  children,
 }: {
   title: string;
   description: string;
   data: {
     title: string;
     description: string;
+    placeholder: string;
+    min: number;
+    max: number;
+    ref: React.RefObject<HTMLInputElement> | undefined;
   }[];
+  children: ReactNode;
 }) => {
   const { colorScheme: theme } = useMantineColorScheme();
   //   const cardStyle = {
@@ -38,6 +45,7 @@ export const LabelInputCard = ({
 
   return (
     <Card withBorder radius='md' p='xl'>
+      {children}
       <Text fz='lg' style={{ lineHeight: 1, fontWeight: 500 }}>
         {title}
       </Text>

@@ -76,10 +76,7 @@ const CoinsPage = () => {
 
           <Switch>
             <Route exact path={`/coin/${id}/about`}>
-              <CoinAbout
-                coinDetailsData={coinDetailsData}
-                ident={coinsInfos.list.get(id)}
-              />
+              <CoinAbout coinDetailsData={coinDetailsData} />
             </Route>
             <Route exact path={`/coin/${id}/chart`}>
               <CoinDetailsChart coin={id_tview} />
