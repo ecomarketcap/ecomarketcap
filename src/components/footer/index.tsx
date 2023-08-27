@@ -6,14 +6,13 @@ import {
   Box,
   rem,
   NavLink,
+  Image,
 } from '@mantine/core';
 import {
   IconBrandTwitter,
   IconBrandYoutube,
   IconBrandInstagram,
 } from '@tabler/icons-react';
-import { MantineLogo } from '@mantine/ds';
-import { Link } from 'react-router-dom';
 
 type FooterLinksProps = {
   data: {
@@ -105,7 +104,10 @@ function MainFooter({ data }: FooterLinksProps) {
             },
           })}
         >
-          <MantineLogo size={30} />
+          <Image
+            src={`${process.env.PUBLIC_URL}/ecomarketcap-logo.svg`}
+            height={50}
+          />
           <Text
             size='xs'
             color='dimmed'

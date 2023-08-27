@@ -57,7 +57,7 @@ const MainPage: React.FC = (props) => {
     <Box sx={{ maxWidth: '100%' }}>
       {loading === '' ? (
         <Switch>
-          <Route exact strict path='(/|/cryptomarketparrot)(/|)'>
+          <Route exact strict path='(/|/ecomarketcap)(/|)'>
             <RankingsPage
               lastUpdateTime={lastUpdateTime}
               refreshUpdateTime={refreshUpdateTime}

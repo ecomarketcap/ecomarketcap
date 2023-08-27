@@ -7,11 +7,11 @@ import {
   Button,
   rem,
   Autocomplete,
+  Image,
 } from '@mantine/core';
 
 import { useHistory } from 'react-router-dom';
 import { IconChevronDown, IconSearch } from '@tabler/icons-react';
-import { MantineLogo } from '@mantine/ds';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -105,7 +105,14 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
       >
         <Group>
           <Group>
-            <MantineLogo size={28} />
+            <Image
+              src={`${process.env.PUBLIC_URL}/ecomarketcap-logo.svg`}
+              height={48}
+              style={{
+                position: 'relative',
+                top: '-6px',
+              }}
+            />
           </Group>
           <Group
             spacing={5}

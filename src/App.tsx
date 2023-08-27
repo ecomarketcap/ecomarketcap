@@ -73,7 +73,7 @@ function App() {
                 <Route
                   exact
                   strict
-                  path='(/|/cryptomarketparrot)(/|)'
+                  path='(/|/ecomarketcap)(/|)'
                   component={MainPage}
                 />
                 <Route path='/about'>
