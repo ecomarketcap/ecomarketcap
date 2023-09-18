@@ -1,8 +1,17 @@
-import { TextInput, Grid, Box, Button } from '@mantine/core';
-import { useFilters } from './hooks';
+import {
+  Box,
+  Button,
+  Card,
+  Group,
+  Switch,
+  Text,
+  TextInput,
+} from '@mantine/core';
+
 import { FilterInputs as FilterInputsType } from './types';
-import { LabelInputCard } from '../../card';
+import { data } from 'jquery';
 import { getFilterInputData } from './data';
+import { useFilters } from './hooks';
 
 export const Filters = ({
   changeFilter,
@@ -20,69 +29,72 @@ export const Filters = ({
 
   return (
     <>
-      <Box sx={{ marginTop: 'xs', maxWidth: '90vw' }}>
-        <Grid gutter='md'>
-          {filterInputData.map((inputDataGroup, index) => (
-            <Grid.Col key={index} span={6}>
-              {inputDataGroup.data.map((inputData, dataIndex) => (
-                <LabelInputCard
-                  title={inputDataGroup?.title}
-                  description={inputDataGroup?.description}
-                  data={inputDataGroup?.data}
-                >
-                  <Box
-                    key={dataIndex}
-                    sx={{
-                      marginBottom: 'xs',
-                      fontSize: '0.8rem',
-                      display: 'block',
-                    }}
-                  >
-                    <TextInput
-                      id={inputData.id}
-                      type='number'
-                      placeholder={inputData.placeholder}
-                      min={inputData.min}
-                      max={inputData.max}
-                      name={inputData.id}
-                      ref={inputData.ref}
-                      size='xs'
-                      sx={{ width: '100px' }}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      marginTop: 'xs',
-                    }}
-                  >
-                    <Button
-                      size='xs'
-                      radius='md'
-                      color='gray'
-                      onClick={changeFilterHandler}
-                      sx={{ marginRight: 'sm' }}
-                    >
-                      Apply Filter
-                    </Button>
-                    <Button
-                      size='xs'
-                      radius='md'
-                      color='gray'
-                      onClick={resetFilterHandler}
-                    >
-                      Reset Filter
-                    </Button>
-                  </Box>
-                </LabelInputCard>
-              ))}
-            </Grid.Col>
-          ))}
-        </Grid>
+      {filterInputData.map((inputField, dataIndex) => (
+        <Box
+          key={dataIndex}
+          sx={{
+            marginBottom: 'xs',
+            fontSize: '0.8rem',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Text fz='lg' style={{ lineHeight: 1, fontWeight: 500 }}>
+              {inputField?.title}
+            </Text>
+            <Text fz='xs' c='dimmed' mt={3} mb='xl' sx={{ maxWidth: '200px' }}>
+              {inputField?.description}
+            </Text>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'row', gap: '0.3125rem' }}>
+            {inputField.data.map((inputData) => (
+              <TextInput
+                id={inputData.id}
+                type='number'
+                placeholder={inputData.placeholder}
+                min={inputData.min}
+                max={inputData.max}
+                name={inputData.id}
+                ref={inputData.ref}
+                size='xs'
+                sx={{ width: '100px' }}
+              />
+            ))}
+          </Box>
+        </Box>
+      ))}
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column', // stack the buttons vertically
+          justifyContent: 'flex-end',
+          marginTop: 'xs',
+          gap: 'sm', // space between the buttons
+        }}
+      >
+        <Button
+          size='xs'
+          radius='md'
+          color='blue'
+          onClick={changeFilterHandler}
+          mb='sm'
+        >
+          Apply Filter
+        </Button>
+        <Button
+          size='xs'
+          radius='md'
+          color='red'
+          variant='light'
+          onClick={resetFilterHandler}
+        >
+          Reset Filter
+        </Button>
       </Box>
     </>
   );
 };
-
-export default Filters;
