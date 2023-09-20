@@ -64,17 +64,18 @@ const CoinRow = ({
       }
 
       try {
-        const response = await axios.get(
-          `https://www.coingecko.com/coins/${chartSvgIndex}/sparkline.svg`,
-          {
-            responseType: 'blob',
-          }
-        );
-
-        const objectUrl = URL.createObjectURL(response.data);
-        setchartSvg(objectUrl);
-        setChartSvgLoading(false);
-        setFetchCount((prevCount) => prevCount + 1); // Increment fetch count
+        if (chartSvgIndex) {
+          const response = await axios.get(
+            `https://www.coingecko.com/coins/${chartSvgIndex}/sparkline.svg`,
+            {
+              responseType: 'blob',
+            }
+          );
+          const objectUrl = URL.createObjectURL(response.data);
+          setchartSvg(objectUrl);
+          setChartSvgLoading(false);
+          setFetchCount((prevCount) => prevCount + 1); // Increment fetch count
+        }
       } catch (error) {
         console.error('Error fetching coin image:', error);
       }

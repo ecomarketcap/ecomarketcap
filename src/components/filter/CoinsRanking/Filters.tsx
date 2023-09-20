@@ -41,7 +41,10 @@ export const Filters = ({
           }}
         >
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Text fz='lg' style={{ lineHeight: 1, fontWeight: 500 }}>
+            <Text
+              fz='lg'
+              style={{ lineHeight: 1, fontWeight: 500, color: '#495057' }}
+            >
               {inputField?.title}
             </Text>
             <Text fz='xs' c='dimmed' mt={3} mb='xl' sx={{ maxWidth: '200px' }}>

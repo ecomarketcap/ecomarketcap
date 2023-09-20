@@ -21,6 +21,7 @@ const Title = styled.h1`
   @media (max-width: 900px) {
     height: 5rem;
   }
+  color: #495057;
 `;
 
 export default function RankingsPage(props) {
@@ -72,7 +73,7 @@ export default function RankingsPage(props) {
     let interval = null;
     interval = setInterval(() => {
       fetchAllData();
-    }, 30000);
+    }, 35000);
 
     return () => clearInterval(interval);
   });
@@ -82,6 +83,33 @@ export default function RankingsPage(props) {
       refreshData(needRefresh.filterDidChanged);
     }
   });
+
+  const fetchAllData = async () => {
+    const response = await DataProvider.getCoinsDataAllCur();
+
+    const sortedResponse = sortDataSet(
+      response.data,
+      sorting.key,
+      sorting.order
+    );
+    const dataFiltered = Filter.byRange(sortedResponse, filter);
+
+    const { newCoinsData, snapChange } = computeNewCoinsData({
+      data: dataFiltered,
+      startPage: page.current,
+      coinsPerPage: COIN_COUNT,
+      getChangeInSnapshot: () => getChangeInSnapshot(dataFiltered),
+    });
+    setDataSet({
+      coinsData: Copy.nested(sortedResponse),
+      coinsFiltered: Copy.nested(dataFiltered),
+      snapshot: Copy.nested(newCoinsData),
+      snapshotChange: Copy.deep(snapChange),
+    });
+
+    props.refreshUpdateTime(Time.fromTimestamp(Date.now() / 1000));
+  };
+
   const getChangeInSnapshot = (newCoinsData) => {
     const snapChange = [];
     if (DataSet.snapshot.length !== 0) {
@@ -111,33 +139,6 @@ export default function RankingsPage(props) {
     return snapChange;
   };
 
-  const fetchAllData = async () => {
-    const response = await DataProvider.getCoinsDataAllCur();
-
-    const sortedResponse = sortDataSet(
-      response.data,
-      sorting.key,
-      sorting.order
-    );
-    const dataFiltered = Filter.byRange(sortedResponse, filter);
-
-    const { newCoinsData, snapChange } = computeNewCoinsData({
-      data: dataFiltered,
-      startPage: page.current,
-      coinsPerPage: COIN_COUNT,
-      getChangeInSnapshot: () => getChangeInSnapshot(dataFiltered),
-    });
-
-    setDataSet({
-      coinsData: Copy.nested(sortedResponse),
-      coinsFiltered: Copy.nested(dataFiltered),
-      snapshot: Copy.nested(newCoinsData),
-      snapshotChange: Copy.deep(snapChange),
-    });
-
-    props.refreshUpdateTime(Time.fromTimestamp(Date.now() / 1000));
-  };
-
   const refreshData = async (isFilterChanged) => {
     const dataFiltered = isFilterChanged
       ? Filter.byRange(DataSet.coinsData, filter)
@@ -150,6 +151,7 @@ export default function RankingsPage(props) {
       getChangeInSnapshot: () => getChangeInSnapshot(dataFiltered),
     });
 
+    /*update data states*/
     setDataSet((oldSet) => {
       const newSet = {
         coinsData: oldSet.coinsData,
@@ -245,12 +247,9 @@ export default function RankingsPage(props) {
       return newFilter;
     });
 
-    setPage((oldPage) => {
-      const newPage = {
-        current: 0,
-        last: oldPage.last,
-      };
-      return newPage;
+    setPage({
+      current: 1,
+      last: page.last,
     });
 
     setNeedRefresh({
