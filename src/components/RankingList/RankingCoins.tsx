@@ -123,7 +123,6 @@ const RankingCoins = ({
 
       <tbody>
         <>{console.log('coinsData', coinsData)}</>
-        <>{console.log('coinsInfos', coinsInfos)}</>
         {coinsData.map(
           ({ rank, symbol, name, circulating_supply, quotes }, index) => (
             <CoinRow

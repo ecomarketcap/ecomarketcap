@@ -52,7 +52,6 @@ const CoinRow = ({
   svg: string;
   chartSvgIndex: number;
 }) => {
-  const { colorScheme } = useMantineColorScheme();
   const [isHovered, setIsHovered] = useState(false);
   const [chartSvgLoading, setChartSvgLoading] = useState(true);
   const [chartSvg, setchartSvg] = useState<string | undefined>(undefined);

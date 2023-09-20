@@ -8,6 +8,7 @@ import { CoinRankNavbar } from '../../components/navbar';
 
 import { Compare, Filter, Copy, Time } from '../../modules/Utilities';
 import { DataProvider } from '../../modules/DataProvider';
+import { computeNewCoinsData } from '../../helpers';
 
 const COIN_COUNT = 50; //100;
 
@@ -26,7 +27,7 @@ export default function RankingsPage(props) {
   const { coinsInfos } = useContext(DataContext);
 
   const [page, setPage] = useState({
-    current: 0,
+    current: 1,
     last: 50,
   });
 
@@ -71,7 +72,7 @@ export default function RankingsPage(props) {
     let interval = null;
     interval = setInterval(() => {
       fetchAllData();
-    }, 35000);
+    }, 30000);
 
     return () => clearInterval(interval);
   });
@@ -81,34 +82,6 @@ export default function RankingsPage(props) {
       refreshData(needRefresh.filterDidChanged);
     }
   });
-
-  const fetchAllData = async () => {
-    const response = await DataProvider.getCoinsDataAllCur();
-
-    const sortedResponse = sortDataSet(
-      response.data,
-      sorting.key,
-      sorting.order
-    );
-    const dataFiltered = Filter.byRange(sortedResponse, filter);
-
-    const newCoinsData = dataFiltered.slice(
-      page.current * COIN_COUNT,
-      page.current * COIN_COUNT + COIN_COUNT
-    );
-
-    const snapChange = getChangeInSnapshot(newCoinsData);
-
-    setDataSet({
-      coinsData: Copy.nested(sortedResponse),
-      coinsFiltered: Copy.nested(dataFiltered),
-      snapshot: Copy.nested(newCoinsData),
-      snapshotChange: Copy.deep(snapChange),
-    });
-
-    props.refreshUpdateTime(Time.fromTimestamp(Date.now() / 1000));
-  };
-
   const getChangeInSnapshot = (newCoinsData) => {
     const snapChange = [];
     if (DataSet.snapshot.length !== 0) {
@@ -138,18 +111,45 @@ export default function RankingsPage(props) {
     return snapChange;
   };
 
+  const fetchAllData = async () => {
+    const response = await DataProvider.getCoinsDataAllCur();
+
+    const sortedResponse = sortDataSet(
+      response.data,
+      sorting.key,
+      sorting.order
+    );
+    const dataFiltered = Filter.byRange(sortedResponse, filter);
+
+    const { newCoinsData, snapChange } = computeNewCoinsData({
+      data: dataFiltered,
+      startPage: page.current,
+      coinsPerPage: COIN_COUNT,
+      getChangeInSnapshot: () => getChangeInSnapshot(dataFiltered),
+    });
+
+    setDataSet({
+      coinsData: Copy.nested(sortedResponse),
+      coinsFiltered: Copy.nested(dataFiltered),
+      snapshot: Copy.nested(newCoinsData),
+      snapshotChange: Copy.deep(snapChange),
+    });
+
+    props.refreshUpdateTime(Time.fromTimestamp(Date.now() / 1000));
+  };
+
   const refreshData = async (isFilterChanged) => {
     const dataFiltered = isFilterChanged
       ? Filter.byRange(DataSet.coinsData, filter)
       : DataSet.coinsFiltered;
 
-    const newCoinsData = dataFiltered.slice(
-      page.current * COIN_COUNT,
-      page.current * COIN_COUNT + COIN_COUNT
-    );
-    const snapChange = getChangeInSnapshot(newCoinsData);
+    const { newCoinsData, snapChange } = computeNewCoinsData({
+      data: dataFiltered,
+      startPage: page.current,
+      coinsPerPage: COIN_COUNT,
+      getChangeInSnapshot: () => getChangeInSnapshot(dataFiltered),
+    });
 
-    /*update data states*/
     setDataSet((oldSet) => {
       const newSet = {
         coinsData: oldSet.coinsData,

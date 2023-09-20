@@ -70,7 +70,7 @@ const Pagination = ({
           <MantinePagination
             total={total}
             // value={page.current}
-            value={page.current === 0 ? 1 : page.current}
+            value={page.current}
             boundaries={2}
             onChange={handlePaginationChange}
           />
