@@ -27,7 +27,7 @@ export default function RankingsPage(props) {
 
   const [page, setPage] = useState({
     current: 0,
-    last: 100,
+    last: 50,
   });
 
   const [sorting, setSorting] = useState({
@@ -311,6 +311,9 @@ export default function RankingsPage(props) {
         toggleDevise={toggleDevise}
         changeFilter={changeFilter}
         handleClickPage={handleClickPage}
+        setPage={setPage}
+        total={DataSet?.coinsData?.length / page.last}
+        setNeedRefresh={setNeedRefresh}
         devise={filter.devise}
         page={page}
       />

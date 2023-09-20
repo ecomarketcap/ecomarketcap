@@ -40,7 +40,6 @@ export var DataProvider = {
         chartSvgIndex: getChartSvgIndex({ imageUrl: coin?.image }),
       });
     });
-    console.log('coinList', coinList);
 
     return coinList;
   },

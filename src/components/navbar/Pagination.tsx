@@ -3,11 +3,9 @@ import {
   Grid,
   Paper,
   Button,
-  useMantineColorScheme,
+  Text,
   Pagination as MantinePagination,
 } from '@mantine/core';
-
-import { darkTheme, lightTheme } from '../../theme';
 import { CoinsRankingFilters } from '../filter';
 import { FilterInputs } from '../filter/CoinsRanking/types';
 
@@ -16,27 +14,45 @@ const Pagination = ({
   location,
   devise,
   setDevise,
-  page: { current, last },
+  page,
   setPage,
   changeFilter,
   resetFilter,
+  total,
+  setNeedRefresh,
 }: {
   history: any;
   location: any;
   devise: string;
   setDevise: (devise: string) => void;
   page: { current: number; last: number };
-  setPage: (page: { current: number; last: number }) => void;
+  setPage: (
+    value: React.SetStateAction<{
+      current: number;
+      last: number;
+    }>
+  ) => void;
   changeFilter: (filters: FilterInputs) => void;
-  resetFilter: () => void;
+  resetFilter: (number: number) => void;
+  total: number;
+  setNeedRefresh: (
+    value: React.SetStateAction<{
+      needed: boolean;
+      filterDidChanged: boolean;
+    }>
+  ) => void;
 }) => {
-  // ... existing code
-
   const handlePaginationChange = (currentPage: number) => {
-    setPage({ current: currentPage, last });
-  };
+    setPage({
+      current: currentPage,
+      last: page.last,
+    });
 
-  const { colorScheme: theme } = useMantineColorScheme();
+    setNeedRefresh({
+      needed: true,
+      filterDidChanged: false,
+    });
+  };
 
   return (
     <Paper
@@ -50,11 +66,11 @@ const Pagination = ({
       }}
     >
       <Grid gutter='md'>
-        {/* ... existing code for the first Col (like filters or any other UI elements) */}
         <Col span={12} style={{ display: 'flex', justifyContent: 'center' }}>
           <MantinePagination
-            total={last}
-            defaultValue={current}
+            total={total}
+            // value={page.current}
+            value={page.current === 0 ? 1 : page.current}
             boundaries={2}
             onChange={handlePaginationChange}
           />
