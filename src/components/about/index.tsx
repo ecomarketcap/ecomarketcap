@@ -31,13 +31,13 @@ const data = [
   {
     image: <IconBook size='sm' color='lightyellow' />,
     title: 'Learnable',
-    description: `Ever wanted to learn how to create the frontend with latest tech stack? You can do it on this app's code`,
+    description: `Ever wanted to learn how to create the frontend with the latest tech stack? You can do it on this app's code!`,
   },
   {
     image: <IconBrandGithub size='sm' color='lightyellow' />,
     title: 'Open source',
     description:
-      'You can download, build you own or contribute to this code. Check us on Github or contact us on Discord or Linked In!',
+      'You can download, build on or contribute to this code. Check us on Github or contact us on Discord or Linked In!',
   },
 ];
 
@@ -104,13 +104,7 @@ const FeatureCards = () => {
         className={classes.itemIcon}
         size={60}
         radius='md'
-        // gradient={{
-        //   from: 'rgba(255, 195, 0, 1)',
-        //   to: 'rgba(255, 243, 156, 1)',
-        //   deg: 238,
-        // }}
         gradient={{ from: 'indigo', to: 'rgba(44, 176, 242, 1)', deg: 129 }}
-        // gradient={{ from: 'violet', to: 'grape', deg: 238 }}
       >
         {item.image}
       </ThemeIcon>
@@ -128,7 +122,7 @@ const FeatureCards = () => {
     <Container size={700} className={classes.wrapper}>
       <Text className={classes.supTitle}>About us</Text>
       <Title className={classes.title} order={2}>
-        Ecomarketcap is <span className={classes.highlight}>not</span> just for
+        Ecomarketcap is <span className={classes.highlight}>not</span> just a
         cryptocurrency tracker
       </Title>
       <Container size={660} p={0}>
