@@ -16,8 +16,8 @@ const CommingSoon = () => {
   return (
     <Container
       style={{
-        paddingTop: rem(80),
-        paddingBottom: rem(80),
+        paddingTop: '14rem',
+        paddingBottom: '8rem',
       }}
     >
       <SimpleGrid

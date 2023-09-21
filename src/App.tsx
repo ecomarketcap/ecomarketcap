@@ -8,7 +8,6 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from '@mantine/core';
-import { useMantineTheme } from '@mantine/core';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all';
@@ -27,17 +26,6 @@ import About from './pages/About';
 import FeaturesCards from './components/about';
 
 function App() {
-  /*
-   * set the global style and provide the toggle function to switch the theme state
-   */
-  // const [theme, toggleTheme] = useTheme();
-  // const [theme, toggleTheme] = useMantineTheme();
-
-  // const globalThemeToProvide = theme === 'light' ? lightTheme : darkTheme;
-  /*
-   * set the user as not login
-   */
-  // const [isAuth, setIsAuth] = useState(false);
   const [coinsInfos, setCoinsInfos] = useState({
     list: [],
   });

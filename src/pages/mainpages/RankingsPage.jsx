@@ -9,6 +9,7 @@ import { CoinRankNavbar } from '../../components/navbar';
 import { Compare, Filter, Copy, Time } from '../../modules/Utilities';
 import { DataProvider } from '../../modules/DataProvider';
 import { computeNewCoinsData } from '../../helpers';
+import { Image, Text, Box } from '@mantine/core';
 
 const COIN_COUNT = 50; //100;
 
@@ -288,7 +289,65 @@ export default function RankingsPage(props) {
       className='tableContainer container-fluid py-4'
       style={{ maxWidth: '80rem' }}
     >
-      <Title>{`Top ${COIN_COUNT} Cryptocurrencies by Market Capitalisation (in ${filter.devise})`}</Title>
+      <Box
+        style={{
+          display: 'flex',
+
+          paddingTop: '2.5rem',
+        }}
+        pb='lg'
+      >
+        <Box
+          sx={{
+            '@media (max-width: 767px)': {
+              marginRight: 0, // None on small screens
+            },
+            '@media (min-width: 768px) and (max-width: 1023px)': {
+              marginRight: '3rem', // 3rem on medium screens
+            },
+            '@media (min-width: 1024px)': {
+              marginRight: '10rem', // 10rem on big screens
+            },
+          }}
+          style={{ maxWidth: '480px' }}
+        >
+          <h1
+            style={{
+              color: 'black',
+              fontFamily: 'Arial',
+              fontSize: '44px',
+              lineHeight: '1.2',
+              fontWeight: 900,
+            }}
+          >
+            <span
+              style={{
+                backgroundColor: 'lightyellow',
+                borderRadius: '4px',
+                padding: '4px 12px',
+              }}
+            >
+              Your
+            </span>
+            crypto portfolio <br />
+            tracker
+          </h1>
+          <Text color='dimmed'>
+            Follow and compare all of the important crypto statistics! Now with
+            ecomarketcap it's never been easier!
+          </Text>
+        </Box>
+        <Image
+          src={`${process.env.PUBLIC_URL}/girl-with-laptop-and-rocket.svg`}
+          style={{ width: '200px', height: '100%', objectFit: 'cover' }}
+          sx={{
+            '@media (max-width: 767px)': {
+              display: 'none', // Hide on small screens
+            },
+          }}
+        />
+      </Box>
+
       <CoinRankNavbar
         toggleDevise={toggleDevise}
         changeFilter={changeFilter}
@@ -296,7 +355,6 @@ export default function RankingsPage(props) {
         devise={filter.devise}
         page={page}
       />
-
       <RankingCoins
         coinsData={DataSet.snapshot}
         coinsList={coinsInfos.list}

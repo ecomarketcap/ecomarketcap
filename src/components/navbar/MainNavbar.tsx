@@ -8,6 +8,7 @@ import {
   rem,
   Autocomplete,
   Image,
+  Box,
 } from '@mantine/core';
 
 import { useHistory } from 'react-router-dom';
@@ -92,7 +93,7 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
   });
 
   return (
-    <Header height={HEADER_HEIGHT} mb={120}>
+    <Header height={HEADER_HEIGHT}>
       <Container
         fluid
         style={{
@@ -105,14 +106,19 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
       >
         <Group>
           <Group>
-            <Image
-              src={`${process.env.PUBLIC_URL}/ecomarketcap-logo.svg`}
-              height={48}
-              style={{
-                position: 'relative',
-                top: '-6px',
-              }}
-            />
+            <Box
+              onClick={() => history.push('/')}
+              style={{ cursor: 'pointer' }}
+            >
+              <Image
+                src={`${process.env.PUBLIC_URL}/ecomarketcap-logo.svg`}
+                height={48}
+                style={{
+                  position: 'relative',
+                  top: '-6px',
+                }}
+              />
+            </Box>
           </Group>
           <Group
             spacing={5}

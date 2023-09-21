@@ -25,8 +25,8 @@ export const InfoBanner: React.FC<InfoBannerProps> = () => {
           <span role='img' aria-label='tree'>
             🌴{' '}
           </span>
-          Please mind protocap is in its early phase. You might be facing data
-          limits if you use it heavily. Thank you for understanding!
+          Please mind Ecomarketcap is in its early phase. You might be facing
+          data limits if you use it heavily. Thank you for understanding!
         </Text>
       </Box>
     </>

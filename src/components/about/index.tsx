@@ -1,116 +1,134 @@
 import {
-    createStyles,
-    Badge,
-    Group,
-    Title,
-    Text,
-    Card,
-    SimpleGrid,
-    Container,
-    rem,
+  Image,
+  Text,
+  Container,
+  ThemeIcon,
+  Title,
+  SimpleGrid,
+  createStyles,
+  rem,
 } from '@mantine/core';
-import { IconGauge, IconUser, IconCookie } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
-const mockdata = [
-    {
-        title: 'Extreme performance',
-        description:
-            'This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit',
-        icon: IconGauge,
-    },
-    {
-        title: 'Privacy focused',
-        description:
-            'People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma',
-        icon: IconUser,
-    },
-    {
-        title: 'No third parties',
-        description:
-            'They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves',
-        icon: IconCookie,
-    },
+const data = [
+  {
+    image: 'https://placehold.jp/100x100.png',
+    title: '2 API sources',
+    description:
+      'We are combining the data from CoinGecko and CoinPaprika for the best user experience.',
+  },
+  {
+    image: 'https://placehold.jp/100x100.png',
+    title: 'Written in React',
+    description: 'We use React, Typescript and Mantine as our frontend stack.',
+  },
+  {
+    image: 'https://placehold.jp/100x100.png',
+    title: 'Learnable',
+    description:
+      'Ever wanted to learn how to create the frontend with latest tech stack? you can do it on this app code!',
+  },
+  {
+    image: 'https://placehold.jp/100x100.png',
+    title: 'Open source',
+    description:
+      'You can download, build you own or contribute to this code. Check us on Github or contact us on Discord or Linked In!',
+  },
 ];
 
 const useStyles = createStyles((theme) => ({
-    title: {
-        fontSize: rem(34),
-        fontWeight: 900,
-
-        [theme.fn.smallerThan('sm')]: {
-            fontSize: rem(24),
-        },
-    },
-
-    description: {
-        maxWidth: 600,
-        margin: 'auto',
-
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: rem(45),
-            height: rem(2),
-            marginTop: theme.spacing.sm,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-
-    card: {
-        border: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1]
-            }`,
-    },
-
-    cardTitle: {
-        '&::after': {
-            content: '""',
-            display: 'block',
-            backgroundColor: theme.fn.primaryColor(),
-            width: rem(45),
-            height: rem(2),
-            marginTop: theme.spacing.sm,
-        },
-    },
+  wrapper: {
+    paddingTop: '10rem',
+    paddingBottom: '4rem',
+  },
+  item: {
+    display: 'flex',
+  },
+  itemIcon: {
+    padding: theme.spacing.xs,
+    marginRight: theme.spacing.md,
+  },
+  itemTitle: {
+    marginBottom: theme.spacing.xs,
+  },
+  supTitle: {
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 800,
+    fontSize: theme.fontSizes.sm,
+    color: theme.colors.blue[6],
+    letterSpacing: rem(0.5),
+  },
+  title: {
+    lineHeight: 1,
+    textAlign: 'center',
+    marginTop: theme.spacing.xl,
+  },
+  description: {
+    textAlign: 'center',
+    marginTop: theme.spacing.xs,
+  },
+  highlight: {
+    backgroundColor: 'lightyellow',
+    padding: rem(5),
+    paddingTop: 0,
+    borderRadius: theme.radius.sm,
+    display: 'inline-block',
+    color:
+      theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.dark,
+  },
 }));
 
-const FeaturesCards = () => {
-    const { classes, theme } = useStyles();
-    const features = mockdata.map((feature) => (
-        <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
-            <feature.icon size={rem(50)} stroke={2} color={theme.fn.primaryColor()} />
-            <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
-                {feature.title}
-            </Text>
-            <Text fz="sm" c="dimmed" mt="sm">
-                {feature.description}
-            </Text>
-        </Card>
-    ));
+const FeatureCards = () => {
+  const { classes } = useStyles();
+  const [cols, setCols] = useState(1);
 
-    return (
-        <Container size="lg" py="xl">
-            <Group position="center">
-                <Badge variant="filled" size="lg">
-                    Best company ever
-                </Badge>
-            </Group>
+  useEffect(() => {
+    const updateCols = () => {
+      setCols(window.innerWidth <= 768 ? 1 : 2);
+    };
+    updateCols();
+    window.addEventListener('resize', updateCols);
+    return () => window.removeEventListener('resize', updateCols);
+  }, []);
 
-            <Title order={2} className={classes.title} ta="center" mt="sm">
-                Integrate effortlessly with any technology stack
-            </Title>
+  const items = data.map((item) => (
+    <div className={classes.item} key={item.title}>
+      <ThemeIcon
+        variant='light'
+        className={classes.itemIcon}
+        size={60}
+        radius='md'
+      >
+        <Image src={item.image} />
+      </ThemeIcon>
 
-            <Text c="dimmed" className={classes.description} ta="center" mt="md">
-                Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when
-                hunger drives it to try biting a Steel-type Pokémon.
-            </Text>
+      <div>
+        <Text fw={700} fz='lg' className={classes.itemTitle}>
+          {item.title}
+        </Text>
+        <Text c='dimmed'>{item.description}</Text>
+      </div>
+    </div>
+  ));
 
-            <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: 'md', cols: 1 }]}>
-                {features}
-            </SimpleGrid>
-        </Container>
-    );
-}
-
-export default FeaturesCards
+  return (
+    <Container size={700} className={classes.wrapper}>
+      <Text className={classes.supTitle}>About us</Text>
+      <Title className={classes.title} order={2}>
+        Ecomarketcap is <span className={classes.highlight}>not</span> just for
+        cryptocurrency tracker
+      </Title>
+      <Container size={660} p={0}>
+        <Text c='dimmed' className={classes.description}>
+          It's an open source project powered by community from all over the
+          world!
+        </Text>
+      </Container>
+      <SimpleGrid cols={cols} spacing={50} mt={30}>
+        {items}
+      </SimpleGrid>
+    </Container>
+  );
+};
+export default FeatureCards;
