@@ -1,0 +1,386 @@
+import React, { useContext } from 'react';
+// import { ThemeContext } from "../ThemeToggler/ThemeContext";
+import { lightTheme, darkTheme } from '../../theme';
+
+import styled from 'styled-components';
+import { Format } from '../../modules/Utilities';
+import { useMantineColorScheme } from '@mantine/styles';
+
+/**
+ *
+ * Styles
+ */
+const Section = styled.section`
+  font-size: 0.9rem;
+`;
+const ArtDescription = styled.article`
+  line-height: 1.5rem;
+`;
+const SpanTitle = styled.span`
+  line-height: 1.5rem;
+  margin: 0.2rem 0 0.4rem 0.2rem;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: underline;
+`;
+const SpanLabel = styled.span`
+  margin-right: 0.5rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+`;
+const Li = styled.li`
+  list-style-type: circle;
+  list-style-position: inside;
+`;
+
+/************************************
+ *
+ * CoinAbout component
+ *
+ * ******************************** */
+export default function CoinAbout(props) {
+  const { colorScheme: theme } = useMantineColorScheme();
+
+  const colorStyle =
+    theme === 'light'
+      ? {
+          backgroundColor: `${lightTheme.container}`,
+          color: `${lightTheme.content}`,
+        }
+      : {
+          backgroundColor: `${darkTheme.container}`,
+          color: `${darkTheme.content}`,
+        };
+
+  let doc = props.coinDetailsData['description'].en;
+
+  const descriptionMarkUp = { __html: Format.parseToHtml(doc) };
+
+  return (
+    <Section className='container-fluid'>
+      <main className='row container-fluid'>
+        <div
+          className='row mb-2 pt-2 container justify-content-between'
+          style={colorStyle}
+        >
+          <div className='col-6'>
+            <article>
+              <SpanTitle>Links :</SpanTitle>
+              <ul>
+                <SpanLabel>Homepage :</SpanLabel>
+                {props.coinDetailsData.links.homepage.map((link, index) => {
+                  return link !== '' ? (
+                    <Li key={index}>
+                      <a href={link}>{link}</a>
+                    </Li>
+                  ) : null;
+                })}
+              </ul>
+              <ul>
+                <SpanLabel>Sites :</SpanLabel>
+                {props.coinDetailsData.links.blockchain_site.map(
+                  (link, index) => {
+                    return link !== '' ? (
+                      <Li key={index}>
+                        <a to={link}>{link}</a>
+                      </Li>
+                    ) : null;
+                  }
+                )}
+              </ul>
+              <ul>
+                <SpanLabel>Forum :</SpanLabel>
+                {props.coinDetailsData.links.official_forum_url.map(
+                  (link, index) => {
+                    return link !== '' ? (
+                      <Li key={index}>
+                        <a to={link}>{link}</a>
+                      </Li>
+                    ) : null;
+                  }
+                )}
+              </ul>
+            </article>
+          </div>
+          <div className='col-4'>
+            <article>
+              <SpanTitle>Market data :</SpanTitle>
+              <p>
+                <SpanLabel>Current price (usd):</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.current_price.usd}
+                </span>
+              </p>
+
+              <p>
+                <SpanLabel>Current price (btc) :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.current_price.btc}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Current price (eth) :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.current_price.eth}
+                </span>
+              </p>
+
+              <p>
+                <SpanLabel>Ath (usd) :</SpanLabel>
+                <span>{props.coinDetailsData.market_data.ath.usd}</span>
+              </p>
+              <p>
+                <SpanLabel>Ath change %(usd) :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.ath_change_percentage.usd}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Ath date :</SpanLabel>
+                <span>{props.coinDetailsData.market_data.ath_date.usd}</span>
+              </p>
+
+              <p>
+                <SpanLabel>Market cap :</SpanLabel>
+                <span>{props.coinDetailsData.market_data.market_cap.usd}</span>
+              </p>
+
+              <p>
+                <SpanLabel>Price change (24h)</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.price_change_24h}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(24h)</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.price_change_percentage_7d}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(7d)</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.market_data
+                      .price_change_percentage_14d
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(14d)</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.market_data
+                      .price_change_percentage_30d
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(30d)</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.market_data
+                      .price_change_percentage_60d
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(200d)</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.market_data
+                      .price_change_percentage_200d
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Price change %(1y)</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.price_change_percentage_1y}
+                </span>
+              </p>
+
+              <p>
+                <SpanLabel>Market change (24h)</SpanLabel>
+                <span>
+                  {props.coinDetailsData.market_data.market_cap_change_24h}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Market change % (24h)</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.market_data
+                      .market_cap_change_percentage_24h
+                  }
+                </span>
+              </p>
+
+              {/* <p><SpanLabel></SpanLabel><span>{props.coinDetailsData.market_data.last_updated}</span></p> */}
+            </article>
+          </div>
+        </div>
+        <ArtDescription className='row  my-2 pt-2 px-1' style={colorStyle}>
+          <SpanTitle>About :</SpanTitle>
+
+          <div dangerouslySetInnerHTML={descriptionMarkUp}></div>
+        </ArtDescription>
+        <div
+          className='row my-2 pt-2 container d-flex justify-content-between'
+          style={colorStyle}
+        >
+          <div className='col-4'>
+            <article>
+              <SpanTitle>Rankings :</SpanTitle>
+              <p>
+                <SpanLabel>Genesis date :</SpanLabel>
+                <span>{props.coinDetailsData.genesis_date}</span>
+              </p>
+              <p>
+                <SpanLabel>Sentiment up :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.sentiment_votes_up_percentage}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Sentiment down :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.sentiment_votes_down_percentage}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>market cap :</SpanLabel>
+                <span>{props.coinDetailsData.market_cap_rank}</span>
+              </p>
+              <p>
+                <SpanLabel>Coingecko rank :</SpanLabel>
+                <span>{props.coinDetailsData.coingecko_rank}</span>
+              </p>
+              <p>
+                <SpanLabel>Coingecko score :</SpanLabel>
+                <span>{props.coinDetailsData.coingecko_score}</span>
+              </p>
+              <p>
+                <SpanLabel>Daeveloper score :</SpanLabel>
+                <span>{props.coinDetailsData.developer_score}</span>
+              </p>
+              <p>
+                <SpanLabel>Community score :</SpanLabel>
+                <span>{props.coinDetailsData.community_score}</span>
+              </p>
+              <p>
+                <SpanLabel>Liquidity score :</SpanLabel>
+                <span>{props.coinDetailsData.liquidity_score}</span>
+              </p>
+              <p>
+                <SpanLabel>Public interest score :</SpanLabel>
+                <span>{props.coinDetailsData.public_interest_score}</span>
+              </p>
+            </article>
+          </div>
+          <div className='col-4'>
+            <article>
+              <SpanTitle>Public interest :</SpanTitle>
+              <p>
+                <SpanLabel>Bing matches :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.public_interest_stats.bing_matches}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Alexa rank :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.public_interest_stats.alexa_rank}
+                </span>
+              </p>
+            </article>
+            <article>
+              <SpanTitle>Community infos :</SpanTitle>
+              <p>
+                <SpanLabel>Facebook likes :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.community_data.facebook_likes}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Twitter followers :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.community_data.twitter_followers}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Reddit post/48h :</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.community_data
+                      .reddit_average_posts_48h
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Reddit comment/48h :</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.community_data
+                      .reddit_average_comments_48h
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Telegram channel users :</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.community_data
+                      .telegram_channel_user_count
+                  }
+                </span>
+              </p>
+            </article>
+          </div>
+          <div className='col-4'>
+            <article>
+              <SpanTitle>Developer infos :</SpanTitle>
+              <p>
+                <SpanLabel>Forks :</SpanLabel>
+                <span>{props.coinDetailsData.developer_data.forks}</span>
+              </p>
+              <p>
+                <SpanLabel>Stars :</SpanLabel>
+                <span>{props.coinDetailsData.developer_data.stars}</span>
+              </p>
+              <p>
+                <SpanLabel>Subscribers :</SpanLabel>
+                <span>{props.coinDetailsData.developer_data.subscribers}</span>
+              </p>
+              <p>
+                <SpanLabel>Total issues :</SpanLabel>
+                <span>{props.coinDetailsData.developer_data.total_issues}</span>
+              </p>
+              <p>
+                <SpanLabel>Closed issues :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.developer_data.closed_issues}
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Pull request contributors :</SpanLabel>
+                <span>
+                  {
+                    props.coinDetailsData.developer_data
+                      .pull_request_contributors
+                  }
+                </span>
+              </p>
+              <p>
+                <SpanLabel>Pull request merger :</SpanLabel>
+                <span>
+                  {props.coinDetailsData.developer_data.pull_requests_merged}
+                </span>
+              </p>
+            </article>
+          </div>
+        </div>
+      </main>
+    </Section>
+  );
+}
