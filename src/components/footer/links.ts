@@ -4,40 +4,11 @@ export const links = {
       title: 'About',
       links: [
         {
-          label: 'Company',
+          label: 'Project',
           link: '/about/company',
         },
         {
-          label: 'Pricing',
-          link: '#',
-        },
-        {
-          label: 'Support',
-          link: '#',
-        },
-        {
-          label: 'Forums',
-          link: '#',
-        },
-      ],
-    },
-    {
-      title: 'Project',
-      links: [
-        {
-          label: 'Contribute',
-          link: '#',
-        },
-        {
-          label: 'Media assets',
-          link: '#',
-        },
-        {
-          label: 'Changelog',
-          link: '#',
-        },
-        {
-          label: 'Releases',
+          label: 'Team',
           link: '#',
         },
       ],
@@ -46,20 +17,29 @@ export const links = {
       title: 'Community',
       links: [
         {
-          label: 'Join Discord',
+          label: 'Discord',
           link: '#',
         },
         {
-          label: 'Follow on Twitter',
-          link: '#',
+          label: 'Github',
+          link: 'https://github.com/MartinSteefStefko/ecomarketcap',
         },
         {
-          label: 'Email newsletter',
+          label: 'Linked In',
           link: '#',
         },
+      ],
+    },
+    {
+      title: 'Api Sources',
+      links: [
         {
-          label: 'GitHub discussions',
-          link: '#',
+          label: 'CoinGecko',
+          link: 'https://www.coingecko.com/',
+        },
+        {
+          label: 'CoinPaprika',
+          link: 'https://www.coinpaprika.com/',
         },
       ],
     },

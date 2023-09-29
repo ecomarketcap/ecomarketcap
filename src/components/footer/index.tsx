@@ -9,9 +9,9 @@ import {
   Image,
 } from '@mantine/core';
 import {
-  IconBrandTwitter,
-  IconBrandYoutube,
-  IconBrandInstagram,
+  IconBrandDiscord,
+  IconBrandGithub,
+  IconBrandLinkedin,
 } from '@tabler/icons-react';
 
 type FooterLinksProps = {
@@ -143,6 +143,7 @@ function MainFooter({ data }: FooterLinksProps) {
           marginTop: theme.spacing.xl,
           paddingTop: theme.spacing.xl,
           paddingBottom: theme.spacing.xl,
+          maxWidth: '80rem',
           borderTop: `1px solid ${
             theme.colorScheme === 'dark'
               ? theme.colors.dark[4]
@@ -154,27 +155,31 @@ function MainFooter({ data }: FooterLinksProps) {
         })}
       >
         <Text color='dimmed' size='sm'>
-          © 2020 mantine.dev. All rights reserved.
+          © 2023 strongfaculty.dev All rights reserved.
         </Text>
 
         <Group
           spacing={0}
           sx={(theme) => ({
-            [theme.fn.smallerThan('sm')]: {
-              marginTop: theme.spacing.xs,
+            [theme.fn.smallerThan('md')]: {
+              marginRight: 0,
+            },
+            [theme.fn.largerThan('md')]: {
+              marginRight: '3.9rem',
             },
           })}
           position='right'
+          mr='10fdm'
           noWrap
         >
           <ActionIcon size='lg'>
-            <IconBrandTwitter size='1.05rem' stroke={1.5} />
+            <IconBrandDiscord size='1.05rem' stroke={1.5} />
           </ActionIcon>
           <ActionIcon size='lg'>
-            <IconBrandYoutube size='1.05rem' stroke={1.5} />
+            <IconBrandGithub size='1.05rem' stroke={1.5} />
           </ActionIcon>
           <ActionIcon size='lg'>
-            <IconBrandInstagram size='1.05rem' stroke={1.5} />
+            <IconBrandLinkedin size='1.05rem' stroke={1.5} />
           </ActionIcon>
         </Group>
       </Container>
