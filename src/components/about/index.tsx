@@ -9,27 +9,32 @@ import {
   rem,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import {
+  IconApi,
+  IconBrandReact,
+  IconBook,
+  IconBrandGithub,
+} from '@tabler/icons-react';
 
 const data = [
   {
-    image: 'https://placehold.jp/100x100.png',
+    image: <IconApi size='sm' color='lightyellow' />,
     title: '2 API sources',
     description:
       'We are combining the data from CoinGecko and CoinPaprika for the best user experience.',
   },
   {
-    image: 'https://placehold.jp/100x100.png',
+    image: <IconBrandReact size='sm' color='lightyellow' />,
     title: 'Written in React',
     description: 'We use React, Typescript and Mantine as our frontend stack.',
   },
   {
-    image: 'https://placehold.jp/100x100.png',
+    image: <IconBook size='sm' color='lightyellow' />,
     title: 'Learnable',
-    description:
-      'Ever wanted to learn how to create the frontend with latest tech stack? you can do it on this app code!',
+    description: `Ever wanted to learn how to create the frontend with latest tech stack? You can do it on this app's code`,
   },
   {
-    image: 'https://placehold.jp/100x100.png',
+    image: <IconBrandGithub size='sm' color='lightyellow' />,
     title: 'Open source',
     description:
       'You can download, build you own or contribute to this code. Check us on Github or contact us on Discord or Linked In!',
@@ -95,12 +100,19 @@ const FeatureCards = () => {
   const items = data.map((item) => (
     <div className={classes.item} key={item.title}>
       <ThemeIcon
-        variant='light'
+        variant='gradient'
         className={classes.itemIcon}
         size={60}
         radius='md'
+        // gradient={{
+        //   from: 'rgba(255, 195, 0, 1)',
+        //   to: 'rgba(255, 243, 156, 1)',
+        //   deg: 238,
+        // }}
+        gradient={{ from: 'indigo', to: 'rgba(44, 176, 242, 1)', deg: 129 }}
+        // gradient={{ from: 'violet', to: 'grape', deg: 238 }}
       >
-        <Image src={item.image} />
+        {item.image}
       </ThemeIcon>
 
       <div>
