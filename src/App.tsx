@@ -24,6 +24,7 @@ import InfoBanner from './components/banner/InfoBanner';
 import { MarketHeader } from './components/header';
 import About from './pages/About';
 import FeaturesCards from './components/about';
+import Team from './components/about/team';
 
 function App() {
   const [coinsInfos, setCoinsInfos] = useState({
@@ -68,6 +69,7 @@ function App() {
                   <Switch>
                     <Route exact path='/about' component={About} />
                     <Route path='/about/company' component={FeaturesCards} />
+                    <Route path='/about/team' component={Team} />
                   </Switch>
                 </Route>
                 <Route exact path='/coin/:id/:type' component={MainPage} />

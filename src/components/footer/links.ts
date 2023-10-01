@@ -9,7 +9,7 @@ export const links = {
         },
         {
           label: 'Team',
-          link: '#',
+          link: '/about/team',
         },
       ],
     },
