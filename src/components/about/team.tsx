@@ -29,6 +29,14 @@ const teamMembers = [
     github: 'https://github.com/sonaStu',
   },
   {
+    name: 'Dmitriy Yakovlev',
+    email: '',
+    role: 'React Developer',
+    avatarSrc: 'https://api.multiavatar.com/drago.svg',
+    linkedIn: 'https://www.linkedin.com/in/dmitryakovlev',
+    github: 'https://github.com/dmitryakovlev',
+  },
+  {
     name: 'You',
     email: 'youremail@protonmail.com',
     role: 'Next Dev Ninja',
@@ -70,7 +78,7 @@ const Team = () => {
   const { classes } = useStyles();
   return (
     <Container
-      size={700}
+      size={900}
       style={{ paddingTop: '10rem', paddingBottom: '4rem' }}
     >
       <Text mb='lg' className={classes.supTitle}>
@@ -86,7 +94,7 @@ const Team = () => {
       </Container>
       <Grid gutter='md' justify='center' mt={30}>
         {teamMembers.map((member, index) => (
-          <Col key={index} xs={12} sm={4} md={4} lg={4}>
+          <Col key={index} xs={12} sm={3} md={3} lg={3}>
             <TeamMembersInfo
               name={member.name}
               email={member.email}
