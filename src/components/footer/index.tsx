@@ -17,7 +17,7 @@ import {
 type FooterLinksProps = {
   data: {
     title: string;
-    links: { label: string; link: string }[];
+    links: { label: string | 'Project' | 'Team'; link: string }[];
   }[];
 };
 
@@ -29,7 +29,9 @@ function MainFooter({ data }: FooterLinksProps) {
         key={index}
         label={link.label}
         href={link.link}
-        target='_blank'
+        target={
+          link.label !== 'Project' && link.label !== 'Team' ? '_blank' : ''
+        }
         sx={(theme) => ({
           display: 'block',
           fontSize: theme.fontSizes.sm,
@@ -173,23 +175,35 @@ function MainFooter({ data }: FooterLinksProps) {
           mr='10fdm'
           noWrap
         >
-          <a href="https://discord.gg/mcTAKzgr" style={{ textDecoration: 'none' }} target="_blank">
+          <a
+            href='https://discord.gg/mcTAKzgr'
+            style={{ textDecoration: 'none' }}
+            target='_blank'
+          >
             <ActionIcon size='lg'>
               <IconBrandDiscord size='1.05rem' stroke={1.5} />
             </ActionIcon>
           </a>
-                  
-          <a href="https://github.com/MartinSteefStefko/ecomarketcap" style={{ textDecoration: 'none' }} target="_blank">
+
+          <a
+            href='https://github.com/ecomarketcap/ecomarketcap'
+            style={{ textDecoration: 'none' }}
+            target='_blank'
+          >
             <ActionIcon size='lg'>
               <IconBrandGithub size='1.05rem' stroke={1.5} />
             </ActionIcon>
           </a>
-                  
-          <a href="https://www.linkedin.com/company/ecomarketcap/" style={{ textDecoration: 'none' }} target="_blank">
+
+          <a
+            href='https://www.linkedin.com/company/ecomarketcap/'
+            style={{ textDecoration: 'none' }}
+            target='_blank'
+          >
             <ActionIcon size='lg'>
               <IconBrandLinkedin size='1.05rem' stroke={1.5} />
             </ActionIcon>
-          </a>        
+          </a>
         </Group>
       </Container>
     </Box>
