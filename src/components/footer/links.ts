@@ -18,7 +18,7 @@ export const links = {
       links: [
         {
           label: 'Discord',
-          link: '#',
+          link: 'https://discord.gg/mcTAKzgr',
         },
         {
           label: 'Github',
@@ -26,7 +26,7 @@ export const links = {
         },
         {
           label: 'Linked In',
-          link: '#',
+          link: 'https://www.linkedin.com/company/ecomarketcap/',
         },
       ],
     },
