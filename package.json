@@ -1,6 +1,6 @@
 {
   "name": "Ecomarketcap",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
