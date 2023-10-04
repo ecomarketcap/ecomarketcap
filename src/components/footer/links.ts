@@ -22,7 +22,7 @@ export const links = {
         },
         {
           label: 'Github',
-          link: 'https://github.com/MartinSteefStefko/ecomarketcap',
+          link: 'https://github.com/ecomarketcap/ecomarketcap',
         },
         {
           label: 'Linked In',
