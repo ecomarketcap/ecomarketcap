@@ -1,20 +1,20 @@
 import {
   Menu,
-  Center,
   Header,
   Container,
   Group,
-  Button,
-  rem,
   Autocomplete,
   Image,
   Box,
+  Flex,
+  NavLink,
+  Text,
+  ActionIcon,
+  Avatar,
 } from '@mantine/core';
 
 import { useHistory } from 'react-router-dom';
-import { IconChevronDown, IconSearch } from '@tabler/icons-react';
-
-const HEADER_HEIGHT = rem(60);
+import { IconMenu2, IconSearch } from '@tabler/icons-react';
 
 interface MainNavbarProps {
   links: {
@@ -26,134 +26,152 @@ interface MainNavbarProps {
 
 const MainNavbar = ({ links }: MainNavbarProps) => {
   const history = useHistory();
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    ));
+  const items = links.map((item, key) => {
+    // const menuItems = link.links?.map((item) => (
+    //   <Menu.Item key={item.link}>{item.label}</Menu.Item>
+    // ));
 
-    if (menuItems) {
-      return (
-        <Menu
-          key={link.label}
-          trigger='hover'
-          transitionProps={{ exitDuration: 0 }}
-          withinPortal
-        >
-          <Menu.Target>
-            <a
-              href={link.link}
-              onClick={(event) => {
-                event.preventDefault();
-                history.push(link.link);
-              }}
-              style={{
-                display: 'block',
-                lineHeight: 1,
-                padding: `${rem(8)} ${rem(12)}`,
-                borderRadius: '4px',
-                textDecoration: 'none',
-                color: 'inherit',
-                fontSize: rem(14),
-                fontWeight: 500,
-              }}
-            >
-              <Center>
-                <span style={{ marginRight: rem(5) }}>{link.label}</span>
-                <IconChevronDown size={rem(12)} stroke={1.5} />
-              </Center>
-            </a>
-          </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-        </Menu>
-      );
-    }
+    // if (menuItems) {
+    //   return (
+    //     <Menu
+    //       key={link.label}
+    //       trigger="hover"
+    //       transitionProps={{ exitDuration: 0 }}
+    //       withinPortal
+    //     >
+    //       <Menu.Target>
+    //         <a
+    //           href={link.link}
+    //           onClick={(event) => {
+    //             event.preventDefault();
+    //             history.push(link.link);
+    //           }}
+    //           style={{
+    //             display: "block",
+    //             lineHeight: 1,
+    //             padding: `${rem(8)} ${rem(12)}`,
+    //             borderRadius: "4px",
+    //             textDecoration: "none",
+    //             color: "inherit",
+    //             fontSize: rem(14),
+    //             fontWeight: 500,
+    //           }}
+    //         >
+    //           <Center>
+    //             <span style={{ marginRight: rem(5) }}>{link.label}</span>
+    //             <IconChevronDown size={rem(12)} stroke={1.5} />
+    //           </Center>
+    //         </a>
+    //       </Menu.Target>
+    //       <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+    //     </Menu>
+    //   );
+    // }
 
     return (
-      <a
-        key={link.label}
-        href={link.link}
+      <NavLink
+        key={key}
+        label={item.label}
         onClick={(event) => {
           event.preventDefault();
-          history.push(link.link);
+          history.push(item.link);
         }}
-        style={{
-          display: 'block',
-          lineHeight: 1,
-          padding: `${rem(8)} ${rem(12)}`,
-          borderRadius: '4px',
-          textDecoration: 'none',
-          color: 'inherit',
-          fontSize: rem(14),
-          fontWeight: 500,
-        }}
-      >
-        {link.label}
-      </a>
+        w="auto"
+        h={36}
+      />
     );
   });
 
   return (
-    <Header height={HEADER_HEIGHT}>
-      <Container
-        fluid
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: HEADER_HEIGHT,
-          maxWidth: '80rem',
-        }}
-      >
-        <Group>
-          <Group>
-            <Box
-              onClick={() => history.push('/')}
-              style={{ cursor: 'pointer' }}
-            >
-              <Image
-                src={`${process.env.PUBLIC_URL}/ecomarketcap-logo.svg`}
-                height={48}
-                style={{
-                  position: 'relative',
-                  top: '-6px',
-                }}
-              />
-            </Box>
-          </Group>
+    <Header height="61px" pos="sticky" top={0}>
+      <Container size="xl" h="100%" py={12}>
+        <Flex
+          align="center"
+          justify={{ base: 'space-between' }}
+          h="100%"
+          gap="xl"
+        >
+          <Box
+            onClick={() => history.push('/')}
+            style={{ cursor: 'pointer', flexShrink: 0 }}
+          >
+            <Image
+              src={`${process.env.PUBLIC_URL}/logo-small.svg`}
+              height={36}
+            />
+          </Box>
+
           <Group
-            spacing={5}
-            style={{
-              display: 'flex',
-            }}
+            display={{ base: 'none', sm: 'flex' }}
+            spacing="xs"
+            style={{ flexGrow: 1, flexShrink: 0 }}
           >
             {items}
           </Group>
-        </Group>
-        <Group
-          spacing={5}
-          style={{
-            display: 'flex',
-          }}
-        >
+
           <Autocomplete
-            sx={(theme) => ({
-              display: 'flex',
-              justifyContent: 'space-between',
-              [theme.fn.smallerThan('xs')]: {
-                display: 'none',
-              },
-            })}
-            placeholder='Search'
-            icon={<IconSearch size='1rem' stroke={1.5} />}
+            w={{ base: '100%', sm: 'auto' }}
+            maw={{ base: '20rem' }}
+            placeholder="Search"
+            icon={<IconSearch size="1rem" stroke={1.5} />}
             data={[]}
           />
-          <Button radius='xl' h={30} variant='subtle'>
-            Log In
-          </Button>
-          <Button radius='xl' h={30}>
-            Create free account
-          </Button>
-        </Group>
+
+          <Box display={{ base: 'none', sm: 'flex' }} style={{ flexShrink: 0 }}>
+            <Menu>
+              <Menu.Target>
+                <Avatar radius="xl" size={36} />
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Item>
+                  <Text>Log In</Text>
+                </Menu.Item>
+                <Menu.Divider />
+                <Menu.Item>
+                  <Text>Create account</Text>
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Box>
+
+          {/* MOBILE VIEW */}
+          <Box
+            display={{ base: 'block', sm: 'none' }}
+            style={{ flexShrink: 0 }}
+          >
+            <Menu>
+              <Menu.Target>
+                <ActionIcon size={36} variant="filled" color="blue">
+                  <IconMenu2 />
+                </ActionIcon>
+              </Menu.Target>
+
+              <Menu.Dropdown>
+                <Menu.Label>Menu</Menu.Label>
+                {links.map((item, key) => (
+                  <Menu.Item
+                    key={key}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      history.push(item.link);
+                    }}
+                  >
+                    <Text>{item.label}</Text>
+                  </Menu.Item>
+                ))}
+                <Menu.Divider />
+                <Menu.Label>Account</Menu.Label>
+                <Menu.Item>
+                  <Text>Log In</Text>
+                </Menu.Item>
+                <Menu.Item>
+                  <Text>Create account</Text>
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Box>
+        </Flex>
       </Container>
     </Header>
   );

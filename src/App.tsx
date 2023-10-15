@@ -55,26 +55,26 @@ function App() {
         >
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
-              <InfoBanner />
-              <MarketHeader />
+              {/* <InfoBanner /> */}
+              {/* <MarketHeader /> */}
               <MainNavbar links={mainNavbarLinks} />
               <Switch>
                 <Route
                   exact
                   strict
-                  path='(/|/ecomarketcap)(/|)'
+                  path="(/|/ecomarketcap)(/|)"
                   component={MainPage}
                 />
-                <Route path='/about'>
+                <Route path="/about">
                   <Switch>
-                    <Route exact path='/about' component={About} />
-                    <Route path='/about/company' component={FeaturesCards} />
-                    <Route path='/about/team' component={Team} />
+                    <Route exact path="/about" component={About} />
+                    <Route path="/about/company" component={FeaturesCards} />
+                    <Route path="/about/team" component={Team} />
                   </Switch>
                 </Route>
-                <Route exact path='/coin/:id/:type' component={MainPage} />
-                <Route path='/(exchanges||learn)' component={ComingSoon} />
-                <Route path='*' component={NotFound} />
+                <Route exact path="/coin/:id/:type" component={MainPage} />
+                <Route path="/(exchanges||learn)" component={ComingSoon} />
+                <Route path="*" component={NotFound} />
               </Switch>
               <MainFooter data={footerLinks?.data}></MainFooter>
             </BrowserRouter>
