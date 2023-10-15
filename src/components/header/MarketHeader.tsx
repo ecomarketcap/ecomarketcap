@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, useMantineColorScheme } from '@mantine/core';
+import {
+  Box,
+  Container,
+  Flex,
+  Text,
+  useMantineColorScheme,
+} from '@mantine/core';
 
-import { lightTheme, darkTheme } from '../../theme';
-import { Time, Format } from '../../modules/Utilities';
+import { Format } from '../../modules/Utilities';
 import { DataProvider } from '../../modules/DataProvider';
 
 export default function MarketHeader() {
@@ -29,23 +34,13 @@ export default function MarketHeader() {
   });
 
   const [loading, setLoading] = useState(true);
-  const { colorScheme: theme } = useMantineColorScheme();
+  const { colorScheme } = useMantineColorScheme();
 
   useEffect(() => {
     if (loading) {
       fetchMarketHeaderData();
     }
   });
-  const headerStyle =
-    theme === 'light'
-      ? {
-          backgroundColor: `${lightTheme.container}`,
-          color: `${lightTheme.content}`,
-        }
-      : {
-          backgroundColor: `${darkTheme.container}`,
-          color: `${darkTheme.content}`,
-        };
 
   const fetchMarketHeaderData = () => {
     let respGeckoData = DataProvider.getGlobalInfosFromGecko();
@@ -59,55 +54,50 @@ export default function MarketHeader() {
   };
 
   const loader = !loading ? '' : <span>Fecthing data ... </span>;
+  const items = [
+    `Cryptocurrencies: ${marketHeaderData?.geckoData?.active_cryptocurrencies}`,
+    `Markets: ${marketHeaderData.geckoData.markets}`,
+    `Market Cap: ${Format.toCurrency(
+      marketHeaderData?.geckoData?.total_market_cap?.usd,
+      'USD',
+    )}`,
+    `Market Cap %(24h): ${marketHeaderData.geckoData.market_cap_change_percentage_24h_usd}`,
+    `24h Vol.: ${Format.toCurrency(
+      marketHeaderData?.geckoData?.total_volume,
+      'USD',
+    )}`,
+    `BTC % dom: ${marketHeaderData?.geckoData?.market_cap_percentage?.btc}%`,
+  ];
+  const separators = ['•', '•', '•', '•', '•', '•'];
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-        style={headerStyle}
-      >
-        {loading ? (
-          loader
-        ) : (
-          <>
-            <Text size='xs'>
-              Cryptocurrencies:{' '}
-              {marketHeaderData?.geckoData?.active_cryptocurrencies}
-            </Text>
-            <Text>.</Text>
-            <Text size='xs'>Markets: {marketHeaderData.geckoData.markets}</Text>
-            <Text>.</Text>
-            <Text size='xs'>
-              Market Cap:{' '}
-              {Format.toCurrency(
-                marketHeaderData?.geckoData?.total_market_cap?.usd,
-                'USD'
-              )}
-            </Text>
-            <Text>.</Text>
-            <Text size='xs'>
-              Market Cap %(24h):{' '}
-              {marketHeaderData.geckoData.market_cap_change_percentage_24h_usd}
-            </Text>
-            <Text>.</Text>
-            <Text size='xs'>
-              24h Vol.:{' '}
-              {Format.toCurrency(
-                marketHeaderData?.geckoData?.total_volume,
-                'USD'
-              )}
-            </Text>
-            <Text>.</Text>
-            <Text size='xs'>
-              BTC % dom:{' '}
-              {marketHeaderData?.geckoData?.market_cap_percentage?.btc}%
-            </Text>
-          </>
-        )}
+      <Box bg="gray.1">
+        <Container size="xl">
+          {loading ? (
+            loader
+          ) : (
+            <>
+              <Flex
+                align="center"
+                justify="space-between"
+                gap="xs"
+                style={{ overflowX: 'auto' }}
+              >
+                {items.map((item, index) => (
+                  <React.Fragment key={item}>
+                    <Text size="xs" style={{ whiteSpace: 'nowrap' }}>
+                      {item}
+                    </Text>
+                    {index < items.length - 1 && (
+                      <Text>{separators[index]}</Text>
+                    )}
+                  </React.Fragment>
+                ))}
+              </Flex>
+            </>
+          )}
+        </Container>
       </Box>
     </>
   );

@@ -55,8 +55,8 @@ function App() {
         >
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
-              {/* <InfoBanner /> */}
-              {/* <MarketHeader /> */}
+              <InfoBanner />
+              <MarketHeader />
               <MainNavbar links={mainNavbarLinks} />
               <Switch>
                 <Route
