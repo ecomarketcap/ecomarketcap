@@ -84,13 +84,8 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
 
   return (
     <Header height="61px" pos="sticky" top={0}>
-      <Container size="xl" h="100%" py={12}>
-        <Flex
-          align="center"
-          justify={{ base: 'space-between' }}
-          h="100%"
-          gap="xl"
-        >
+      <Container size="xl" py={12}>
+        <Flex align="center" justify={{ base: 'space-between' }} gap="xl">
           <Box
             onClick={() => history.push('/')}
             style={{ cursor: 'pointer', flexShrink: 0 }}
