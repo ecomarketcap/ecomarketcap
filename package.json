@@ -19,6 +19,7 @@
     "bootswatch": "^4.5.0",
     "cryptocurrency-icons": "^0.16.1",
     "jquery": "^3.5.1",
+    "prettier": "^3.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
