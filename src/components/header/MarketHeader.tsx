@@ -68,7 +68,7 @@ export default function MarketHeader() {
     )}`,
     `BTC % dom: ${marketHeaderData?.geckoData?.market_cap_percentage?.btc}%`,
   ];
-  const separators = ['•', '•', '•', '•', '•', '•'];
+  const separators = ['♡', '♡', '♡', '♡', '♡', '♡'];
 
   return (
     <>

@@ -25,6 +25,7 @@ import { MarketHeader } from './components/header';
 import About from './pages/About';
 import FeaturesCards from './components/about';
 import Team from './components/about/team';
+import { theme } from './theme/theme';
 
 function App() {
   const [coinsInfos, setCoinsInfos] = useState({
@@ -48,11 +49,7 @@ function App() {
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
       >
-        <MantineProvider
-          theme={{ colorScheme }}
-          withGlobalStyles
-          withNormalizeCSS
-        >
+        <MantineProvider theme={{ ...theme }} withGlobalStyles withNormalizeCSS>
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
               <InfoBanner />
