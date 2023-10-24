@@ -1,3 +1,4 @@
+
 import {
   Menu,
   Header,
@@ -12,24 +13,29 @@ import {
   ActionIcon,
   Avatar,
   useMantineTheme,
+  ColorScheme,
 } from '@mantine/core';
 
 import { useHistory } from 'react-router-dom';
-import { IconMenu2, IconSearch } from '@tabler/icons-react';
+import { IconMenu2, IconMoonStars, IconSearch, IconSun } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 
-interface MainNavbarProps {
+
+type MainNavbarProps = {
   links: {
     link: string;
     label: string;
     links?: { link: string; label: string }[];
   }[];
+  colorScheme: ColorScheme;
+  toggleColorScheme: (value?: ColorScheme) => void;
 }
 
-const MainNavbar = ({ links }: MainNavbarProps) => {
+const MainNavbar = ({ links, colorScheme, toggleColorScheme }: MainNavbarProps) => {
   const history = useHistory();
   const theme = useMantineTheme();
   const matches = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
+  const dark = colorScheme === 'dark';
   const items = links.map((item, key) => {
     // const menuItems = link.links?.map((item) => (
     //   <Menu.Item key={item.link}>{item.label}</Menu.Item>
@@ -113,6 +119,14 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
             {items}
           </Group>
 
+
+
+
+
+
+
+
+
           <Autocomplete
             w={{ base: '100%', sm: 'auto' }}
             maw={{ base: '20rem' }}
@@ -120,7 +134,15 @@ const MainNavbar = ({ links }: MainNavbarProps) => {
             icon={<IconSearch size="1rem" stroke={1.5} />}
             data={[]}
           />
-
+          <ActionIcon
+            variant="outline"
+            color='blue'
+            onClick={() => toggleColorScheme()}
+            title="Toggle color scheme"
+            size='md'
+          >
+            {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
+          </ActionIcon>
           <Box display={{ base: 'none', sm: 'flex' }} style={{ flexShrink: 0 }}>
             <Menu>
               <Menu.Target>

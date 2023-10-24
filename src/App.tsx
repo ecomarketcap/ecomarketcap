@@ -7,6 +7,7 @@ import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
+
 } from '@mantine/core';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,7 +18,7 @@ import NotFound from './pages/NotFound';
 import ComingSoon from './pages/ComingSoon';
 import MainFooter from './components/footer';
 import { links as footerLinks } from './components/footer/links';
-import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import { useColorScheme } from '@mantine/hooks';
 import MainNavbar from './components/navbar/MainNavbar';
 import { mainNavbarLinks } from './components/navbar';
 import InfoBanner from './components/banner/InfoBanner';
@@ -30,18 +31,12 @@ import { theme } from './theme/theme';
 function App() {
   const [coinsInfos, setCoinsInfos] = useState({
     list: [],
-  });
+  })
 
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: 'mantine-color-scheme',
-    defaultValue: 'light',
-    getInitialValueInEffect: true,
-  });
-
+  const preferredColorScheme = useColorScheme();
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(preferredColorScheme);
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
-
-  useHotkeys([['mod+J', () => toggleColorScheme()]]);
 
   return (
     <>
@@ -49,12 +44,14 @@ function App() {
         colorScheme={colorScheme}
         toggleColorScheme={toggleColorScheme}
       >
-        <MantineProvider theme={{ ...theme }} withGlobalStyles withNormalizeCSS>
+        <MantineProvider theme={{ colorScheme, ...theme }} withGlobalStyles withNormalizeCSS>
           <DataContext.Provider value={{ coinsInfos, setCoinsInfos }}>
             <BrowserRouter>
               <InfoBanner />
               <MarketHeader />
-              <MainNavbar links={mainNavbarLinks} />
+              <MainNavbar links={mainNavbarLinks} colorScheme={colorScheme}
+                toggleColorScheme={toggleColorScheme}
+              />
               <Switch>
                 <Route
                   exact
