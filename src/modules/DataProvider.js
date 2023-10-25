@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getChartSvgIndex } from '../helpers';
+import { fetchGeckoCoinsMarkets } from '../Fetches/coinGecko';
 
 const PAPRIKA = {
   BASE_URL: 'https://api.coinpaprika.com/v1',
@@ -20,29 +21,27 @@ const GECKO = {
 };
 
 export var DataProvider = {
-  getCoinList: async () => {
-    let coinList = new Map();
-    const response = await axios.get(
-      `${GECKO.BASE_URL}${GECKO.COINS_MARKETS}?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`
-    );
 
-    response.data.forEach((coin) => {
-      let key = coin.symbol.toLowerCase();
-      coinList?.set(key, {
-        paprika_id: '',
-        gecko_id: coin?.id,
-        name: coin?.name,
-        symbol: coin?.symbol,
-        rank: coin?.market_cap_rank,
-        is_new: false,
-        is_active: true,
-        svg: coin?.image,
-        chartSvgIndex: getChartSvgIndex({ imageUrl: coin?.image }),
-      });
-    });
 
-    return coinList;
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   getGlobalInfosFromGecko: async () => {
     return await axios.get(`${GECKO.BASE_URL}${GECKO.GLOBAL}`);
@@ -50,7 +49,7 @@ export var DataProvider = {
 
   getCoinsDataAllCur: async () => {
     return await axios.get(
-      `${PAPRIKA.BASE_URL}${PAPRIKA.TICKERS}${PAPRIKA.QUOTES}USD,BTC`
+      `${PAPRIKA.BASE_URL}${PAPRIKA.TICKERS}${PAPRIKA.QUOTES}USD,BTC,CZK`
     );
   },
 
