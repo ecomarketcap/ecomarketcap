@@ -59,6 +59,7 @@ const MainPage: React.FC = (props) => {
     });
 
     if (promises) {
+
       const coinEntries = await Promise.all(promises);
       const filteredCoinEntries = coinEntries.filter(Boolean);
       const coinList = new Map(filteredCoinEntries);
