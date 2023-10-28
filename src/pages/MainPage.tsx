@@ -6,7 +6,8 @@ import { DataContext } from '../components/navbar/DataContext';
 import RankingsPage from './mainpages/RankingsPage';
 import CoinsPage from './mainpages/CoinsPage';
 import About from './About';
-import { Loader } from '@mantine/core';
+import { Loader, Alert, rem, Dialog } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 
 import { Box } from '@mantine/core';
 import { fetchGeckoCoinsMarkets } from '../Fetches/coinGecko';
@@ -19,62 +20,56 @@ import { Coin } from './types';
 const MainPage: React.FC = (props) => {
   const { coinsInfos, setCoinsInfos } = useContext(DataContext);
   const [lastUpdateTime, setLastUpdateTime] = useState<Date>();
-
-  const loading =
-    coinsInfos?.list?.length === 0 ? (
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Loader />
-      </Box>
-    ) : (
-      ''
-    );
+  const [coinsMarketError, setCoinsMarketError] = useState('');
 
   useEffect(() => {
-    if (coinsInfos?.list?.length === 0) {
-      fetchCoinsList();
-    }
-  }, []);
+    const fetchCoinsList = async () => {
+      const { data, error } = await fetchGeckoCoinsMarkets({ currency: "usd" });
+      if (error) {
+        setCoinsMarketError(error?.message);
+
+        setTimeout(() => { setCoinsMarketError('') }, 5000);
+      }
+      const promises = data?.map(async (coin) => {
+        setCoinsMarketError('')
+        const key = coin.symbol.toLowerCase();
+        const coinData: Coin = {
+          paprika_id: '',
+          gecko_id: coin?.id,
+          name: coin?.name,
+          symbol: coin?.symbol,
+          rank: coin?.market_cap_rank,
+          is_new: false,
+          is_active: true,
+          svg: coin?.image,
+          chartSvgIndex: getChartSvgIndex({ imageUrl: coin?.image }),
+        };
+        return [key, coinData] as [string, Coin];
+      });
+      if (promises) {
+        const coinEntries = await Promise.all(promises);
+        const filteredCoinEntries = coinEntries.filter(Boolean);
+        const coinList = new Map(filteredCoinEntries);
+        setCoinsInfos(() => {
+          const infos = {
+            list: coinList,
+          };
+          return infos;
+        });
+      }
+    };
+
+    fetchCoinsList();
+
+  }, [setCoinsInfos]);
 
   const refreshUpdateTime = (newUpdateTime: Date) => {
     setLastUpdateTime(newUpdateTime);
   };
 
-  const fetchCoinsList = async () => {
-    const { data } = await fetchGeckoCoinsMarkets({ currency: "usd" });
-
-    const promises = data?.map(async (coin) => {
-      const key = coin.symbol.toLowerCase();
-      const coinData: Coin = {
-        paprika_id: '',
-        gecko_id: coin?.id,
-        name: coin?.name,
-        symbol: coin?.symbol,
-        rank: coin?.market_cap_rank,
-        is_new: false,
-        is_active: true,
-        svg: coin?.image,
-        chartSvgIndex: getChartSvgIndex({ imageUrl: coin?.image }),
-      };
-      return [key, coinData] as [string, Coin];
-    });
-
-    if (promises) {
-      const coinEntries = await Promise.all(promises);
-      const filteredCoinEntries = coinEntries.filter(Boolean);
-      const coinList = new Map(filteredCoinEntries);
-
-      setCoinsInfos(() => {
-        const infos = {
-          list: coinList,
-        };
-        return infos;
-      });
-    }
-  };
-
   return (
     <Box sx={{ maxWidth: '100%' }}>
-      {loading === '' ? (
+      {coinsInfos?.list?.length !== 0 &&
         <Switch>
           <Route exact strict path='(/|/ecomarketcap)(/|)'>
             <RankingsPage
@@ -82,7 +77,6 @@ const MainPage: React.FC = (props) => {
               refreshUpdateTime={refreshUpdateTime}
             />
           </Route>
-
           <Route path='/coin/:id/:type'>
             <CoinsPage />
           </Route>
@@ -91,9 +85,23 @@ const MainPage: React.FC = (props) => {
           </Route>
           <Route path='/about' component={About} />
         </Switch>
-      ) : (
-        loading
-      )}
+      }
+      {
+        !coinsInfos?.list?.length && !coinsMarketError &&
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Loader />
+        </Box>
+
+      }
+
+
+      <Dialog opened={coinsMarketError ? true : false}
+        size="300px" radius="md" bg='transparent' sx={{ boxShadow: 'none' }} p={0} position={{ bottom: '25%', right: 'calc(50% - 150px)' }}>
+        <Alert variant='light' icon={<IconX style={{ width: rem(20), height: rem(20) }} />} color="red" title="Error!">
+          {coinsMarketError}
+        </Alert>
+      </Dialog>
+
     </Box>
   );
 };

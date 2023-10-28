@@ -63,6 +63,7 @@ export const fetchGeckoCoinsMarkets = async ({
 
 }): Promise<FetchGeckoCoinsMarketsResult> => {
        try {
+
               const { data } = await axios.get<GeckoCoinsMarketsType>(
                      `${GECKO.BASE_URL}${GECKO.COINS_MARKETS}?vs_currency=${currency}&order=${order}&per_page=${perPage}&page=${page}&sparkline=${sparkline}&locale=${locale}`,
                      {
