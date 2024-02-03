@@ -18,7 +18,7 @@ export const links = {
       links: [
         {
           label: 'Discord',
-          link: 'https://discord.gg/mcTAKzgr',
+          link: 'https://discord.gg/5AQu4GWv',
         },
         {
           label: 'Github',

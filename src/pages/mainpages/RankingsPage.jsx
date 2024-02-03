@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
+import { useState, useEffect, useContext, useLayoutEffect } from 'react';
 import { DataContext } from '../../components/navbar/DataContext';
-import styled from 'styled-components';
 
 import RankingCoins from './../../components/RankingList/RankingCoins';
 import { Pagination } from '../../components/navbar';
@@ -12,18 +11,6 @@ import { computeNewCoinsData } from '../../helpers';
 import { Image, Text, Box } from '@mantine/core';
 
 const COIN_COUNT = 50; //100;
-
-const Title = styled.h1`
-  font-size: 1.5rem;
-  text-align: center;
-  height: 4rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-  @media (max-width: 900px) {
-    height: 5rem;
-  }
-  color: #495057;
-`;
 
 export default function RankingsPage(props) {
   const { coinsInfos } = useContext(DataContext);
@@ -91,7 +78,7 @@ export default function RankingsPage(props) {
     const sortedResponse = sortDataSet(
       response.data,
       sorting.key,
-      sorting.order
+      sorting.order,
     );
     const dataFiltered = Filter.byRange(sortedResponse, filter);
 
@@ -285,69 +272,7 @@ export default function RankingsPage(props) {
   };
 
   return (
-    <div
-      className='tableContainer container-fluid py-4'
-      style={{ maxWidth: '80rem' }}
-    >
-      <Box
-        style={{
-          display: 'flex',
-
-          paddingTop: '2.5rem',
-        }}
-        pb='lg'
-      >
-        <Box
-          sx={{
-            '@media (max-width: 767px)': {
-              marginRight: 0, // None on small screens
-            },
-            '@media (min-width: 768px) and (max-width: 1023px)': {
-              marginRight: '3rem', // 3rem on medium screens
-            },
-            '@media (min-width: 1024px)': {
-              marginRight: '10rem', // 10rem on big screens
-            },
-          }}
-          style={{ maxWidth: '480px' }}
-        >
-          <h1
-            style={{
-              color: 'black',
-              fontFamily: 'Arial',
-              fontSize: '44px',
-              lineHeight: '1.2',
-              fontWeight: 900,
-            }}
-          >
-            <span
-              style={{
-                backgroundColor: 'lightyellow',
-                borderRadius: '4px',
-                padding: '4px 12px',
-              }}
-            >
-              Your
-            </span>
-            crypto portfolio <br />
-            tracker
-          </h1>
-          <Text color='dimmed'>
-            Follow and compare all of the important crypto statistics! Now with
-            ecomarketcap it's never been easier!
-          </Text>
-        </Box>
-        <Image
-          src={`${process.env.PUBLIC_URL}/girl-with-laptop-and-rocket.svg`}
-          style={{ width: '200px', height: '100%', objectFit: 'cover' }}
-          sx={{
-            '@media (max-width: 767px)': {
-              display: 'none', // Hide on small screens
-            },
-          }}
-        />
-      </Box>
-
+    <Box>
       <CoinRankNavbar
         toggleDevise={toggleDevise}
         changeFilter={changeFilter}
@@ -374,6 +299,6 @@ export default function RankingsPage(props) {
         devise={filter.devise}
         page={page}
       />
-    </div>
+    </Box>
   );
 }

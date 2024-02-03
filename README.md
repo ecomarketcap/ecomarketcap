@@ -1,6 +1,6 @@
 # Ecomarketcap
 
-> Your crypto tracker written in React, Typescript and Mantine. You can download, build on or contribute to this code. Check us on <a href="https://discord.gg/5szWbtRk" target="_blank">Discord</a> or <a href="" target="https://www.linkedin.com/company/ecomarketcap_blank">LinkedIn</a>!
+> Your crypto tracker written in React, Typescript and Mantine. You can download, build on or contribute to this code. Check us on <a href="https://discord.gg/5AQu4GWv" target="_blank">Discord</a> or <a href="" target="https://www.linkedin.com/company/ecomarketcap_blank">LinkedIn</a>!
 
 ![Ecomarketcap](/public/web1.png)
 
