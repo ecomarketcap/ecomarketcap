@@ -19,7 +19,7 @@ const CoinsPage = () => {
   const { id } = useParams<RouteParams>();
 
   const [coinDetailsData, setCoinDetailsData] = useState<CoinDetailsDataType>(
-    {} as CoinDetailsDataType
+    {} as CoinDetailsDataType,
   );
   const [loading, setLoading] = useState(true);
   const { coinsInfos } = useContext(DataContext);
@@ -70,7 +70,13 @@ const CoinsPage = () => {
           <Loader />
         </Box>
       ) : (
-        <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: '2em' }}>
+        <Box
+          sx={{
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            paddingTop: '0.5rem',
+          }}
+        >
           <CoinPageHeader coinDetailsData={coinDetailsData} />
           <CoinNavbar coin={id} />
 

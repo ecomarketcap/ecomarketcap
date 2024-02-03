@@ -25,7 +25,7 @@ function MainFooter({ data }: FooterLinksProps) {
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <NavLink
-        component='a'
+        component="a"
         key={index}
         label={link.label}
         href={link.link}
@@ -112,8 +112,8 @@ function MainFooter({ data }: FooterLinksProps) {
             height={50}
           />
           <Text
-            size='xs'
-            color='dimmed'
+            size="xs"
+            color="dimmed"
             sx={(theme) => ({
               marginTop: rem(10),
               [theme.fn.smallerThan('sm')]: {
@@ -157,7 +157,7 @@ function MainFooter({ data }: FooterLinksProps) {
           },
         })}
       >
-        <Text color='dimmed' size='sm'>
+        <Text color="dimmed" size="sm">
           © 2023 strongfaculty.dev All rights reserved.
         </Text>
 
@@ -171,37 +171,37 @@ function MainFooter({ data }: FooterLinksProps) {
               marginRight: '3.9rem',
             },
           })}
-          position='right'
-          mr='10fdm'
+          position="right"
+          mr="10fdm"
           noWrap
         >
           <a
-            href='https://discord.gg/mcTAKzgr'
+            href="https://discord.gg/5AQu4GWv"
             style={{ textDecoration: 'none' }}
-            target='_blank'
+            target="_blank"
           >
-            <ActionIcon size='lg'>
-              <IconBrandDiscord size='1.05rem' stroke={1.5} />
+            <ActionIcon size="lg">
+              <IconBrandDiscord size="1.05rem" stroke={1.5} />
             </ActionIcon>
           </a>
 
           <a
-            href='https://github.com/ecomarketcap/ecomarketcap'
+            href="https://github.com/ecomarketcap/ecomarketcap"
             style={{ textDecoration: 'none' }}
-            target='_blank'
+            target="_blank"
           >
-            <ActionIcon size='lg'>
-              <IconBrandGithub size='1.05rem' stroke={1.5} />
+            <ActionIcon size="lg">
+              <IconBrandGithub size="1.05rem" stroke={1.5} />
             </ActionIcon>
           </a>
 
           <a
-            href='https://www.linkedin.com/company/ecomarketcap/'
+            href="https://www.linkedin.com/company/ecomarketcap/"
             style={{ textDecoration: 'none' }}
-            target='_blank'
+            target="_blank"
           >
-            <ActionIcon size='lg'>
-              <IconBrandLinkedin size='1.05rem' stroke={1.5} />
+            <ActionIcon size="lg">
+              <IconBrandLinkedin size="1.05rem" stroke={1.5} />
             </ActionIcon>
           </a>
         </Group>
