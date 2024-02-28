@@ -81,20 +81,20 @@ const Team = () => {
       size={900}
       style={{ paddingTop: '10rem', paddingBottom: '4rem' }}
     >
-      <Text mb='lg' className={classes.supTitle}>
+      <Text mb="lg" className={classes.supTitle}>
         Team
       </Text>
       <Title className={classes.title} order={2}>
         <span className={classes.highlight}>We</span>are Ecomarketcap
       </Title>
       <Container size={660} p={0}>
-        <Text c='dimmed' className={classes.description}>
+        <Text c="dimmed" className={classes.description}>
           We are open-source lovers. Do you feel that too? Let's join us!
         </Text>
       </Container>
-      <Grid gutter='md' justify='center' mt={30}>
+      <Grid gutter="md" justify="center" mt={30}>
         {teamMembers.map((member, index) => (
-          <Col key={index} xs={12} sm={3} md={3} lg={3}>
+          <Col key={index} xs={12} sm={3} md={3} lg={3} miw={'215px'}>
             <TeamMembersInfo
               name={member.name}
               email={member.email}

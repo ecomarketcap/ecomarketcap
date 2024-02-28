@@ -56,7 +56,7 @@ export var Format = {
     for (let i = 0; i < text.length; i++) {
       text = text.replace(
         '\r\n\r\n',
-        '<br/><span style="padding-left: 0.5rem"></span>'
+        '<br/><span style="padding-left: 0.5rem"></span>',
       );
     }
     return text;
@@ -100,8 +100,8 @@ export var Filter = {
       return (
         value.quotes[filter.devise]['market_cap'] >= filter.minCap &&
         value.quotes[filter.devise]['market_cap'] <= filter.maxCap &&
-        value.circulating_supply >= filter.minSup &&
-        value.circulating_supply <= filter.maxSup &&
+        value.total_supply >= filter.minSup &&
+        value.total_supply <= filter.maxSup &&
         value.quotes[filter.devise]['percent_change_24h'] >= filter.minVarD &&
         value.quotes[filter.devise]['percent_change_24h'] <= filter.maxVarD &&
         (filter.devise === 'USD'

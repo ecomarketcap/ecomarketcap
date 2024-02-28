@@ -7,7 +7,7 @@ type CoinsData = {
   rank: number;
   symbol: string;
   name: string;
-  circulating_supply: number;
+  total_supply: number;
   quotes: {
     [key: string]: {
       price: number;
@@ -114,7 +114,7 @@ const RankingCoins = ({
             </th>
             <th
               style={{ textAlign: 'right' }}
-              onClick={() => sortHeader('circulating_supply')}
+              onClick={() => sortHeader('total_supply')}
             >
               Circulating Supply
             </th>
@@ -124,7 +124,7 @@ const RankingCoins = ({
 
         <tbody>
           {coinsData.map(
-            ({ rank, symbol, name, circulating_supply, quotes }, index) => (
+            ({ rank, symbol, name, total_supply, quotes }, index) => (
               <CoinRow
                 key={symbol}
                 rank={rank}
@@ -143,14 +143,14 @@ const RankingCoins = ({
                 percent_from_price_ath={quotes[devise].percent_from_price_ath}
                 volume_24h={quotes[devise].volume_24h}
                 market_cap={quotes[devise].market_cap}
-                circulating_supply={circulating_supply}
+                total_supply={total_supply}
                 snapshotChange={snapshotChange[index]}
                 devise={devise}
                 chartSvgIndex={
                   coinsInfos.list.get(symbol.toLowerCase())?.chartSvgIndex || 0
                 }
               />
-            )
+            ),
           )}
         </tbody>
       </Table>

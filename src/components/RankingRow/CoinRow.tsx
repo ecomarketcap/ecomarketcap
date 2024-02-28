@@ -1,25 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Route, NavLink } from 'react-router-dom';
-import {
-  useMantineColorScheme,
-  Image,
-  Group,
-  Text,
-  Skeleton,
-} from '@mantine/core';
+import { Image, Group, Text, Skeleton } from '@mantine/core';
 
 import { Format } from '../../modules/Utilities';
 import CoinsPage from '../../pages/mainpages/CoinsPage';
 import icons from './iconLoader';
 import axios from 'axios';
-import { useInterval } from '@mantine/hooks';
 
 const CoinRow = ({
   rank,
 
   symbol,
   name,
-  circulating_supply,
+  total_supply,
   priceSet,
   devise,
   snapshotChange,
@@ -37,7 +30,7 @@ const CoinRow = ({
   rank: number;
   symbol: string;
   name: string;
-  circulating_supply: number;
+  total_supply: number;
   priceSet?: Array<[number, number]>;
   devise: string;
   snapshotChange: string;
@@ -69,7 +62,7 @@ const CoinRow = ({
             `https://www.coingecko.com/coins/${chartSvgIndex}/sparkline.svg`,
             {
               responseType: 'blob',
-            }
+            },
           );
           const objectUrl = URL.createObjectURL(response.data);
           setchartSvg(objectUrl);
@@ -105,7 +98,7 @@ const CoinRow = ({
   const formattedPrice = Format.toCurrencyNDigits(
     market_cap > 0 ? price : 0,
     devise,
-    8
+    8,
   );
   const volume = Format.toCurrencyNDigits(volume_24h, devise, 0);
   const marketcap = Format.toCurrency(market_cap, devise);
@@ -132,7 +125,7 @@ const CoinRow = ({
               textDecoration: 'none',
             }}
           >
-            <Group spacing='xs' miw={170}>
+            <Group spacing="xs" miw={170}>
               <Image src={icon} alt={symbol} width={24} />
               <Text fw={700} style={{ color: '#495057' }}>
                 {name}
@@ -143,11 +136,11 @@ const CoinRow = ({
         {snapshotChange === 'unchanged' ? (
           <td style={{ textAlign: 'right' }}>{formattedPrice}</td>
         ) : snapshotChange === 'up' ? (
-          <td style={{ textAlign: 'right' }} className='text-success'>
+          <td style={{ textAlign: 'right' }} className="text-success">
             {formattedPrice}
           </td>
         ) : (
-          <td style={{ textAlign: 'right' }} className='text-danger'>
+          <td style={{ textAlign: 'right' }} className="text-danger">
             {formattedPrice}
           </td>
         )}
@@ -168,14 +161,12 @@ const CoinRow = ({
         </td>
         <td style={{ textAlign: 'right' }}>{volume}</td>
         <td style={{ textAlign: 'right' }}>{marketcap}</td>
-        <td style={{ textAlign: 'right' }}>
-          {circulating_supply.toLocaleString()}
-        </td>
+        <td style={{ textAlign: 'right' }}>{total_supply.toLocaleString()}</td>
         <td style={{ textAlign: 'right' }}>
           {chartSvgLoading ? (
             <Skeleton visible={chartSvgLoading} />
           ) : (
-            <Image src={chartSvg} alt='Chart Svg' width={135} height={50} />
+            <Image src={chartSvg} alt="Chart Svg" width={135} height={50} />
           )}
         </td>
       </tr>
