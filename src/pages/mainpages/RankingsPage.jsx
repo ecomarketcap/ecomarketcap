@@ -162,7 +162,7 @@ export default function RankingsPage(props) {
     switch (key) {
       case 'rank':
       case 'name':
-      case 'circulating_supply':
+      case 'total_supply':
         newSet.sort(Compare.byKey(key, order));
         break;
       default:

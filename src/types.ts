@@ -1606,7 +1606,6 @@ export const CoinDetailsData = {
     },
     total_supply: 21000000,
     max_supply: 21000000,
-    circulating_supply: 19461237,
     last_updated: '2023-08-18T20:17:38.664Z',
   },
   community_data: {
