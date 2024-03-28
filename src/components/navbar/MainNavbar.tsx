@@ -1,4 +1,3 @@
-
 import {
   Menu,
   Header,
@@ -17,9 +16,13 @@ import {
 } from '@mantine/core';
 
 import { useHistory } from 'react-router-dom';
-import { IconMenu2, IconMoonStars, IconSearch, IconSun } from '@tabler/icons-react';
+import {
+  IconMenu2,
+  IconMoonStars,
+  IconSearch,
+  IconSun,
+} from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
-
 
 type MainNavbarProps = {
   links: {
@@ -29,55 +32,18 @@ type MainNavbarProps = {
   }[];
   colorScheme: ColorScheme;
   toggleColorScheme: (value?: ColorScheme) => void;
-}
+};
 
-const MainNavbar = ({ links, colorScheme, toggleColorScheme }: MainNavbarProps) => {
+const MainNavbar = ({
+  links,
+  colorScheme,
+  toggleColorScheme,
+}: MainNavbarProps) => {
   const history = useHistory();
   const theme = useMantineTheme();
   const matches = useMediaQuery(`(min-width: ${theme.breakpoints.sm})`);
   const dark = colorScheme === 'dark';
   const items = links.map((item, key) => {
-    // const menuItems = link.links?.map((item) => (
-    //   <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    // ));
-
-    // if (menuItems) {
-    //   return (
-    //     <Menu
-    //       key={link.label}
-    //       trigger="hover"
-    //       transitionProps={{ exitDuration: 0 }}
-    //       withinPortal
-    //     >
-    //       <Menu.Target>
-    //         <a
-    //           href={link.link}
-    //           onClick={(event) => {
-    //             event.preventDefault();
-    //             history.push(link.link);
-    //           }}
-    //           style={{
-    //             display: "block",
-    //             lineHeight: 1,
-    //             padding: `${rem(8)} ${rem(12)}`,
-    //             borderRadius: "4px",
-    //             textDecoration: "none",
-    //             color: "inherit",
-    //             fontSize: rem(14),
-    //             fontWeight: 500,
-    //           }}
-    //         >
-    //           <Center>
-    //             <span style={{ marginRight: rem(5) }}>{link.label}</span>
-    //             <IconChevronDown size={rem(12)} stroke={1.5} />
-    //           </Center>
-    //         </a>
-    //       </Menu.Target>
-    //       <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-    //     </Menu>
-    //   );
-    // }
-
     return (
       <NavLink
         key={key}
@@ -118,15 +84,6 @@ const MainNavbar = ({ links, colorScheme, toggleColorScheme }: MainNavbarProps) 
           >
             {items}
           </Group>
-
-
-
-
-
-
-
-
-
           <Autocomplete
             w={{ base: '100%', sm: 'auto' }}
             maw={{ base: '20rem' }}
@@ -134,7 +91,7 @@ const MainNavbar = ({ links, colorScheme, toggleColorScheme }: MainNavbarProps) 
             icon={<IconSearch size="1rem" stroke={1.5} />}
             data={[]}
           />
-          <ActionIcon
+          {/* <ActionIcon
             variant="outline"
             color='blue'
             onClick={() => toggleColorScheme()}
@@ -142,7 +99,7 @@ const MainNavbar = ({ links, colorScheme, toggleColorScheme }: MainNavbarProps) 
             size='md'
           >
             {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
-          </ActionIcon>
+          </ActionIcon> */}
           <Box display={{ base: 'none', sm: 'flex' }} style={{ flexShrink: 0 }}>
             <Menu>
               <Menu.Target>
