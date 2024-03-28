@@ -50,31 +50,6 @@ const CoinRow = ({
   const [chartSvg, setchartSvg] = useState<string | undefined>(undefined);
   const [fetchCount, setFetchCount] = useState(0);
 
-  useEffect(() => {
-    const fetchChartSvg = async () => {
-      if (fetchCount >= 100) {
-        return;
-      }
-
-      try {
-        if (chartSvgIndex) {
-          const response = await axios.get(
-            `https://www.coingecko.com/coins/${chartSvgIndex}/sparkline.svg`,
-            {
-              responseType: 'blob',
-            },
-          );
-          const objectUrl = URL.createObjectURL(response.data);
-          setchartSvg(objectUrl);
-          setChartSvgLoading(false);
-          setFetchCount((prevCount) => prevCount + 1); // Increment fetch count
-        }
-      } catch (error) {
-        console.error('Error fetching coin image:', error);
-      }
-    };
-    fetchChartSvg();
-  }, []);
   const link = '/coin/' + symbol.toLowerCase() + '/chart';
 
   const styleClassVarH1 =
@@ -162,13 +137,13 @@ const CoinRow = ({
         <td style={{ textAlign: 'right' }}>{volume}</td>
         <td style={{ textAlign: 'right' }}>{marketcap}</td>
         <td style={{ textAlign: 'right' }}>{total_supply.toLocaleString()}</td>
-        <td style={{ textAlign: 'right' }}>
+        {/* <td style={{ textAlign: 'right' }}>
           {chartSvgLoading ? (
             <Skeleton visible={chartSvgLoading} />
           ) : (
             <Image src={chartSvg} alt="Chart Svg" width={135} height={50} />
           )}
-        </td>
+        </td> */}
       </tr>
       <Route exact path={link}>
         <CoinsPage />
